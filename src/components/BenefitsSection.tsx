@@ -1,24 +1,30 @@
 "use client";
+import React from "react";
 import { motion } from "framer-motion";
+import { InteractiveGlassCard } from "./InteractiveGlassCard";
+import { Star, Quote, ArrowRight } from "lucide-react";
 
 const TESTIMONIALS = [
   {
     quote:
-      "Since offering Zaika, our average basket size went up 34%. Customers love paying over time and we love getting paid upfront.",
+      "Since onboarding Zaika, our average order value expanded by 34%. The split-payment option removed the biggest barrier at checkout.",
     author: "Sarah M.",
     role: "Head of eCommerce, FashionHub",
+    color: "var(--lime)",
   },
   {
     quote:
-      "The integration took our dev team under 2 hours. It just works — no issues, no complaints, just happy customers checkout faster.",
-    author: "James K.",
+      "We went live in under 2 hours. Zero friction integration and our conversion rate jumped 22% within the first month.",
+    author: "James T.",
     role: "CTO, Apparel Direct",
+    color: "#60a5fa",
   },
   {
     quote:
-      "We've seen a 28% reduction in cart abandonment since launch. Zaika is now essential to our growth strategy.",
-    author: "Nomsa D.",
-    role: "Digital Director, HomeStyle",
+      "28% reduction in cart abandonment since launch. Zaika is now a core pillar of our growth strategy going forward.",
+    author: "Nomsa K.",
+    role: "Ops Director, Homestyle",
+    color: "#FF4B4B",
   },
 ];
 
@@ -27,41 +33,71 @@ export default function BenefitsSection() {
     <section
       id="benefits"
       style={{
-        background: "var(--off-black)",
-        padding: "100px 0",
-        borderTop: "1px solid var(--border)",
+        background: "var(--black)",
+        padding: "120px 0",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div className="container">
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 1,
+          background: "rgba(255,255,255,0.06)",
+        }}
+      />
+
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          style={{ marginBottom: 64 }}
+          style={{ marginBottom: 80 }}
         >
-          <span
-            className="label"
-            style={{ color: "var(--lime)", display: "block", marginBottom: 16 }}
-          >
-            Why businesses love Zaika
-          </span>
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
-              gap: 48,
+              gap: 64,
               alignItems: "flex-end",
             }}
           >
-            <h2 className="display display-lg">
-              Proven
-              <br />
-              <span style={{ color: "var(--lime)" }}>Results.</span>
-            </h2>
-            <p className="body-lg">
-              Join thousands of merchants already experiencing higher
-              conversion, bigger baskets, and happier customers.
+            <div>
+              <span
+                style={{
+                  color: "var(--lime)",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  display: "block",
+                  marginBottom: 20,
+                }}
+              >
+                Why Businesses Love Zaika
+              </span>
+              <h2
+                className="display display-lg"
+                style={{
+                  textTransform: "uppercase",
+                  color: "#fff",
+                  fontWeight: 900,
+                }}
+              >
+                Proven <span style={{ color: "var(--lime)" }}>Growth.</span>
+              </h2>
+            </div>
+            <p
+              className="body-lg"
+              style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
+            >
+              Join thousands of businesses already experiencing higher
+              conversion rates and expanded customer reach with the Zaika
+              network.
             </p>
           </div>
         </motion.div>
@@ -71,112 +107,140 @@ export default function BenefitsSection() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
+            gap: 20,
           }}
         >
           {TESTIMONIALS.map((t, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 36 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              whileHover={{ y: -6, borderColor: "rgba(198,241,53,0.30)" }}
-              style={{
-                background: "var(--surface)",
-                border: "1px solid var(--border)",
-                borderRadius: 20,
-                padding: "36px 28px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 24,
-                transition: "border-color 0.25s, transform 0.25s",
-                cursor: "default",
-              }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.12 }}
+              style={{ height: "100%" }}
             >
-              {/* Stars */}
-              <div style={{ display: "flex", gap: 3 }}>
-                {[...Array(5)].map((_, j) => (
-                  <span key={j} style={{ color: "var(--lime)", fontSize: 18 }}>
-                    ★
-                  </span>
-                ))}
-              </div>
-              {/* Quote */}
-              <p
+              <InteractiveGlassCard
+                className="glass-panel"
+                glowColor={`${t.color}18`}
                 style={{
-                  fontSize: "1rem",
-                  lineHeight: 1.72,
-                  color: "rgba(255,255,255,0.80)",
-                  fontStyle: "italic",
-                  flex: 1,
+                  padding: "40px 32px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 24,
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  height: "100%",
                 }}
               >
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              {/* Author */}
-              <div
-                style={{ borderTop: "1px solid var(--border)", paddingTop: 20 }}
-              >
+                {/* Stars */}
                 <div
                   style={{
-                    fontWeight: 700,
-                    fontSize: 14,
-                    color: "var(--white)",
-                    marginBottom: 3,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    transform: "translateZ(30px)",
                   }}
                 >
-                  {t.author}
+                  <div style={{ display: "flex", gap: 3 }}>
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} size={13} fill={t.color} color={t.color} />
+                    ))}
+                  </div>
+                  <Quote size={20} color="rgba(255,255,255,0.08)" />
                 </div>
-                <div style={{ fontSize: 12, color: "var(--muted)" }}>
-                  {t.role}
+
+                <p
+                  style={{
+                    fontSize: "1rem",
+                    lineHeight: 1.8,
+                    color: "rgba(255,255,255,0.75)",
+                    fontStyle: "italic",
+                    flex: 1,
+                    transform: "translateZ(20px)",
+                  }}
+                >
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+
+                <div
+                  style={{
+                    borderTop: "1px solid rgba(255,255,255,0.06)",
+                    paddingTop: 20,
+                    transform: "translateZ(20px)",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontWeight: 800,
+                      fontSize: 13,
+                      color: "#fff",
+                      letterSpacing: "0.04em",
+                      marginBottom: 4,
+                    }}
+                  >
+                    {t.author}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 11,
+                      color: "rgba(255,255,255,0.35)",
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    {t.role}
+                  </div>
                 </div>
-              </div>
+              </InteractiveGlassCard>
             </motion.div>
           ))}
         </div>
 
         {/* CTA row */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
           style={{
-            marginTop: 56,
+            marginTop: 80,
             display: "flex",
             gap: 16,
-            justifyContent: "center",
+            justifyContent: "flex-start",
+            alignItems: "center",
           }}
         >
-          <motion.button
+          <button
             className="btn-lime"
-            whileHover={{ scale: 1.04, y: -2 }}
-            whileTap={{ scale: 0.97 }}
+            data-text="Join the Network"
+            style={{ padding: "16px 36px", fontSize: 14 }}
             onClick={() =>
               document
                 .querySelector("#cta")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            data-text="Join the Network →"
           >
-            <span>Join the Network →</span>
-          </motion.button>
-          <motion.button
+            <span>Join the Network</span>
+          </button>
+          <button
             className="btn-outline-white"
-            whileHover={{ scale: 1.04, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-            data-text="Request a Demo"
+            style={{
+              padding: "16px 32px",
+              fontSize: 14,
+              background: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}
           >
-            <span>Request a Demo</span>
-          </motion.button>
+            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              Request a Demo <ArrowRight size={14} />
+            </span>
+          </button>
         </motion.div>
       </div>
 
       <style>{`
         @media (max-width: 900px) {
-          #benefits .container > div:nth-child(2) > div { grid-template-columns: 1fr !important; }
-          #benefits .container > div:nth-child(3) { grid-template-columns: 1fr !important; }
+          #benefits .container > div:first-child > div { grid-template-columns: 1fr !important; gap: 32px !important; }
+          #benefits .container > div:nth-child(2) { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>

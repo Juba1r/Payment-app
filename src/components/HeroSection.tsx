@@ -1,239 +1,248 @@
 "use client";
-import { motion } from "framer-motion";
-import Image from "next/image";
-
-const STATS = [
-  { val: "$2.4B", label: "Total transactions" },
-  { val: "2.6M", label: "Customers" },
-  { val: "$3.8B", label: "Available to spend" },
-];
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 export default function HeroSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const yText = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
   return (
     <section
       id="home"
+      ref={containerRef}
       style={{
-        background: "var(--black)",
         minHeight: "100vh",
+        background: "var(--black)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         position: "relative",
         overflow: "hidden",
+        paddingTop: 120,
+        paddingBottom: 80,
       }}
     >
-      {/* Main grid */}
-      <div className="container" style={{ paddingTop: 80, paddingBottom: 60 }}>
-        <div
+      {/* Subtle noise texture via SVG filter */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage:
+            "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,75,75,0.07) 0%, transparent 70%)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+
+      {/* Thin accent line top */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 2,
+          background:
+            "linear-gradient(90deg, transparent 0%, var(--lime) 40%, transparent 100%)",
+          transformOrigin: "left",
+          zIndex: 5,
+        }}
+      />
+
+      <motion.div
+        style={{
+          y: yText,
+          opacity,
+          position: "relative",
+          zIndex: 2,
+          willChange: "transform, opacity",
+        }}
+        className="container"
+      >
+        {/* Pre-label */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0 }}
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 48,
+            display: "inline-flex",
             alignItems: "center",
-            minHeight: "80vh",
+            gap: 12,
+            marginBottom: 40,
           }}
         >
-          {/* ── Left ── */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-            {/* Headline */}
-            <motion.h1
-              className="display display-xl"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-              style={{ color: "var(--white)" }}
-            >
-              Increase
-              <br />
-              Revenue
-              <br />
-              <span
-                style={{
-                  WebkitTextStroke: "2px var(--white)",
-                  color: "transparent",
-                }}
-              >
-                With Our
-              </span>
-              <br />
-              <span style={{ color: "var(--lime)" }}>Retail</span>
-              <br />
-              Solutions
-            </motion.h1>
-
-            {/* Sub */}
-            <motion.p
-              className="body-lg"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              style={{
-                maxWidth: 440,
-                color: "rgba(255,255,255,0.8)",
-                fontSize: "1.1rem",
-                lineHeight: 1.65,
-              }}
-            >
-              Let&apos;s get you paid! Increase your sales with split payment
-              options and performance marketing.
-            </motion.p>
-
-            {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              style={{ display: "flex", gap: 14, flexWrap: "wrap" }}
-            >
-              <motion.button
-                className="btn-lime"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() =>
-                  document
-                    .querySelector("#cta")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                data-text="Apply Now →"
-              >
-                <span>Apply Now →</span>
-              </motion.button>
-              <motion.button
-                className="btn-outline-white"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                data-text="Learn More"
-              >
-                <span>Learn More</span>
-              </motion.button>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              style={{
-                display: "flex",
-                gap: 40,
-                paddingTop: 12,
-                borderTop: "1px solid var(--border)",
-                marginTop: 8,
-              }}
-            >
-              {STATS.map((s, i) => (
-                <motion.div
-                  key={s.label}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.55 + i * 0.1 }}
-                >
-                  <div
-                    className="display display-sm"
-                    style={{ color: "var(--white)", marginBottom: 4 }}
-                  >
-                    {s.val}
-                  </div>
-                  <div className="body-sm">{s.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* ── Right: abstract blob image ── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92, x: 30 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1.1, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
-            style={{ position: "relative" }}
+          <div
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
+              background: "var(--lime)",
+              boxShadow: "0 0 10px var(--lime)",
+            }}
+            className="animate-pulse-dot"
+          />
+          <span
+            style={{
+              fontSize: 11,
+              fontWeight: 800,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "var(--lime)",
+            }}
           >
-            {/* Main blob */}
-            <motion.div
-              className="animate-blob"
+            Zaika Business Platform
+          </span>
+        </motion.div>
+
+        {/* Main headline — editorial, large, split line */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.19, 1, 0.22, 1] }}
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(3.8rem, 10vw, 9rem)",
+            fontWeight: 900,
+            textTransform: "uppercase",
+            lineHeight: 0.88,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            marginBottom: 40,
+            maxWidth: 1000,
+          }}
+        >
+          Increase
+          <br />
+          <span style={{ color: "var(--lime)" }}>Revenue</span>
+          <br />
+          With Us.
+        </motion.h1>
+
+        {/* Sub copy + CTA row */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-start",
+            gap: 64,
+            flexWrap: "wrap",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "1.1rem",
+              lineHeight: 1.7,
+              color: "rgba(255,255,255,0.55)",
+              maxWidth: 400,
+            }}
+          >
+            Boost your sales with interest-free split payment options and
+            performance marketing. Get paid upfront while your customers pay in
+            flexible instalments.
+          </p>
+
+          <div
+            style={{
+              display: "flex",
+              gap: 16,
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              className="btn-lime"
+              data-text="Apply Now"
+              style={{ padding: "16px 36px", fontSize: 14 }}
+            >
+              <span>Apply Now</span>
+            </button>
+            <button
+              className="btn-outline-white"
+              data-text="See How It Works"
+              style={{ padding: "16px 32px", fontSize: 14 }}
+              onClick={() =>
+                document
+                  .querySelector("#how-it-works")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                See How It Works <ArrowRight size={14} />
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* Quick stat bar */}
+        <div
+          style={{
+            marginTop: 80,
+            display: "flex",
+            gap: 0,
+            borderTop: "1px solid rgba(255,255,255,0.07)",
+            paddingTop: 40,
+            flexWrap: "wrap",
+          }}
+        >
+          {[
+            { num: "4.7★", label: "Google Rating" },
+            { num: "9s", label: "Transaction Frequency" },
+            { num: "11K+", label: "Daily Transactions" },
+            { num: "10K+", label: "Points of Presence" },
+          ].map((s, i) => (
+            <div
+              key={i}
               style={{
-                borderRadius: 28,
-                overflow: "hidden",
-                position: "relative",
-                aspectRatio: "1",
-                width: "100%",
+                flex: "1 1 160px",
+                paddingRight: 32,
+                paddingBottom: 16,
+                borderRight:
+                  i < 3 ? "1px solid rgba(255,255,255,0.07)" : "none",
+                paddingLeft: i > 0 ? 32 : 0,
               }}
             >
-              <Image
-                src="/hero-blob.png"
-                alt="Zaika abstract"
-                fill
-                style={{ objectFit: "cover" }}
-                priority
-              />
-              {/* Dark edge overlay */}
               <div
                 style={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "radial-gradient(circle at 85% 85%, rgba(0,0,0,0.5) 0%, transparent 50%)",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2rem, 4vw, 3rem)",
+                  fontWeight: 900,
+                  color: "#fff",
+                  lineHeight: 1,
+                  marginBottom: 6,
                 }}
-              />
-            </motion.div>
-
-            {/* Floating badge — bottom right corner */}
-            <motion.div
-              animate={{ y: [-6, 6, -6] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              style={{
-                position: "absolute",
-                bottom: -20,
-                right: -20,
-                background: "var(--white)",
-                borderRadius: 16,
-                padding: "14px 18px",
-                boxShadow: "0 16px 48px rgba(0,0,0,0.6)",
-                display: "flex",
-                flexDirection: "column",
-                gap: 4,
-              }}
-            >
-              <span
+              >
+                {s.num}
+              </div>
+              <div
                 style={{
-                  fontSize: 10,
+                  fontSize: 12,
                   fontWeight: 700,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  color: "#888",
+                  color: "rgba(255,255,255,0.4)",
                 }}
               >
-                Today&apos;s Sales
-              </span>
-              <span
-                style={{
-                  fontSize: 24,
-                  fontWeight: 900,
-                  color: "#000",
-                  fontFamily: "var(--font-display)",
-                }}
-              >
-                +$124K
-              </span>
-              <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                <span
-                  style={{ fontSize: 11, color: "#16a34a", fontWeight: 700 }}
-                >
-                  ↑ 18%
-                </span>
-                <span style={{ fontSize: 11, color: "#888" }}>
-                  vs yesterday
-                </span>
+                {s.label}
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          ))}
         </div>
-      </div>
+      </motion.div>
 
-      {/* Responsive styles */}
       <style>{`
-        @media (max-width: 900px) {
-          #home .container > div { grid-template-columns: 1fr !important; gap: 40px !important; }
-          #home .container > div > div:last-child { order: -1; }
+        @media (max-width: 768px) {
+          #home .stat-row { flex-direction: column; }
         }
       `}</style>
     </section>

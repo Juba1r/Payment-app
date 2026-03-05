@@ -1,81 +1,102 @@
 "use client";
+import React from "react";
 import { motion } from "framer-motion";
-import { Linkedin, Facebook, Instagram, Music } from "lucide-react"; // using Music for TikTok temporarily
+import {
+  Linkedin,
+  Facebook,
+  Instagram,
+  Music,
+  ShieldCheck,
+  Cpu,
+} from "lucide-react";
+import { InteractiveGlassCard } from "./InteractiveGlassCard";
 
 const COLS = [
-  { head: "Shopper", links: ["How It Works", "FAQs", "Press", "Help"] },
   {
-    head: "Business",
+    head: "CORE SYSTEM",
     links: [
-      "BNPL",
-      "Retail Credit",
-      "Marketing Solutions",
-      "Request a Demo",
-      "Business Support",
+      "NEURAL NETWORK",
+      "QUANTUM FAQS",
+      "PRESS ARCHIVE",
+      "ENCRYPTED HELP",
     ],
   },
   {
-    head: "Resources",
+    head: "PROTOCOLS",
     links: [
-      "Merchant Portal",
-      "PayUp App",
-      "Operational Status",
-      "PAIA Manual",
-      "Whistle Blowing",
+      "BNPL 2.0",
+      "SPATIAL CREDIT",
+      "NEURAL MARKETING",
+      "REQUEST UPLINK",
+      "NODE SUPPORT",
+    ],
+  },
+  {
+    head: "INFRASTRUCTURE",
+    links: [
+      "CORE PORTAL",
+      "PAYUP INTERFACE",
+      "STATUS MODULE",
+      "PROTOCOL MANUAL",
+      "DATA SAFETY",
     ],
   },
 ];
 
 const SOCIAL = [
-  { Icon: Linkedin, label: "LinkedIn" },
-  { Icon: Music, label: "TikTok" }, // Replaced Youtube with TikTok to match screenshot
-  { Icon: Facebook, label: "Facebook" },
-  { Icon: Instagram, label: "Instagram" },
+  { Icon: Linkedin, label: "LKD" },
+  { Icon: Music, label: "TKT" },
+  { Icon: Facebook, label: "FBK" },
+  { Icon: Instagram, label: "IGM" },
 ];
 
 export default function Footer() {
   return (
     <footer
+      className="perspective-world"
       style={{
-        background: "var(--black)",
-        paddingTop: 64,
+        background: "#000",
+        paddingTop: 120,
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div className="container">
+      <div className="particle-grid" style={{ opacity: 0.2 }} />
+
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
         {/* ── Link grid + Contact block ── */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "3fr 1fr",
-            gap: 20,
-            marginBottom: 20,
+            gap: 24,
+            marginBottom: 24,
           }}
         >
-          {/* Left: 1 large box containing 3 columns */}
-          <div
+          {/* Left: Glass Panel for Links */}
+          <InteractiveGlassCard
+            glowColor="rgba(255, 75, 75, 0.1)"
+            className="glass-panel"
             style={{
-              border: "1px solid var(--border)",
-              borderRadius: "24px 24px 24px 24px",
               padding: "48px",
               display: "grid",
               gridTemplateColumns: "repeat(3,1fr)",
-              gap: 20,
+              gap: 24,
+              border: "1px solid rgba(255,255,255,0.05)",
             }}
           >
             {COLS.map((col) => (
               <div
                 key={col.head}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 16,
-                }}
+                style={{ display: "flex", flexDirection: "column", gap: 20 }}
               >
                 <span
                   style={{
-                    fontSize: "1.25rem",
-                    fontWeight: 500,
-                    color: "var(--lime)", // Now sweet red since globals.css updated
+                    fontSize: "0.85rem",
+                    fontWeight: 800,
+                    color: "var(--lime)",
+                    letterSpacing: "0.2em",
+                    textTransform: "uppercase",
                     marginBottom: 12,
                   }}
                 >
@@ -85,141 +106,119 @@ export default function Footer() {
                   <motion.a
                     key={l}
                     href="#"
-                    className="hover-lime"
                     style={{
-                      fontSize: 13,
-                      color: "rgba(255,255,255,0.7)",
-                      transition: "color 0.2s",
-                      fontWeight: 500,
+                      fontSize: 12,
+                      color: "rgba(255,255,255,0.4)",
+                      fontWeight: 600,
+                      letterSpacing: "0.05em",
+                      textDecoration: "none",
                     }}
-                    whileHover={{ x: 4 }}
+                    whileHover={{ x: 5, color: "#fff" }}
                   >
                     {l}
                   </motion.a>
                 ))}
               </div>
             ))}
-          </div>
+          </InteractiveGlassCard>
 
-          {/* Right: 2 Stacked Boxes */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <div
+          {/* Right: Contact & Scale */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            <InteractiveGlassCard
+              glowColor="rgba(255, 75, 75, 0.2)"
+              className="glass-panel"
               style={{
-                border: "1px solid var(--border)",
-                borderRadius: "24px 24px 24px 24px",
                 padding: "32px 24px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 16,
+                border: "1px solid rgba(255,255,255,0.05)",
               }}
             >
-              <span
-                style={{
-                  fontSize: "1.1rem",
-                  fontWeight: 500,
-                  color: "var(--lime)",
-                  marginBottom: 8,
-                }}
-              >
-                Contact us
-              </span>
+              <Cpu size={24} color="var(--lime)" style={{ marginBottom: 4 }} />
               <motion.button
-                className="btn-dark"
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  justifyContent: "center",
-                  width: "100%",
-                  padding: "14px",
-                  borderRadius: 8,
-                }}
-                data-text="Chatbot"
+                className="btn-lime"
+                whileHover={{ scale: 1.05 }}
+                style={{ width: "100%", padding: "12px", fontSize: 13 }}
               >
-                <span>Chatbot</span>
+                <span>OPEN UPLINK</span>
               </motion.button>
-              <div style={{ textAlign: "center", marginTop: 8 }}>
-                <p
-                  style={{
-                    fontSize: 13,
-                    color: "var(--white)",
-                    marginBottom: 4,
-                  }}
-                >
-                  Or email us at
-                </p>
+              <div style={{ textAlign: "center" }}>
                 <a
-                  href="mailto:merchantsupport@zaika.com"
-                  style={{
-                    fontSize: 13,
-                    color: "#60a5fa",
-                    textDecoration: "none",
-                  }}
+                  href="mailto:ops@zaika.network"
+                  style={{ fontSize: 11, color: "#60a5fa", fontWeight: 700 }}
                 >
-                  merchantsupport@zaika.com
+                  OPS@ZAIKA.NETWORK
                 </a>
               </div>
-            </div>
+            </InteractiveGlassCard>
 
-            <div
+            <InteractiveGlassCard
+              className="glass-panel"
               style={{
-                border: "1px solid var(--border)",
-                borderRadius: "24px 24px 24px 24px",
-                padding: "32px 24px",
+                padding: "24px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
+                border: "1px solid rgba(255,255,255,0.05)",
               }}
             >
-              <p
+              <span
                 style={{
-                  fontSize: 12,
-                  color: "var(--white)",
-                  marginBottom: 8,
-                  fontWeight: 500,
+                  fontSize: 10,
+                  color: "rgba(255,255,255,0.4)",
+                  fontWeight: 800,
+                  letterSpacing: "0.1em",
+                  marginBottom: 4,
                 }}
               >
-                A company of
-              </p>
+                A NODE OF
+              </span>
               <span
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: 900,
-                  color: "var(--white)",
+                  color: "#fff",
                 }}
               >
-                Weaver Fintech
+                WEAVER <span style={{ color: "#FF4B4B" }}>FINTECH</span>
               </span>
-            </div>
+            </InteractiveGlassCard>
           </div>
         </div>
 
-        {/* ── Big logo + Social ── */}
+        {/* ── Brand & Social ── */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "3fr 1fr",
-            gap: 20,
-            marginBottom: 40,
+            gap: 24,
+            marginBottom: 64,
             alignItems: "center",
           }}
         >
-          <span
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(4rem, 8vw, 7rem)",
-              fontWeight: 900,
-              textTransform: "uppercase",
-              letterSpacing: "-0.04em",
-              color: "var(--white)",
-            }}
-          >
-            Zaika<span style={{ color: "var(--lime)" }}>.</span>
-          </span>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: 16 }}>
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(3rem, 6vw, 6rem)",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "-0.04em",
+                lineHeight: 0.8,
+                color: "#fff",
+              }}
+            >
+              ZAIKA<span style={{ color: "var(--lime)" }}>.</span>
+            </span>
+            <div style={{ paddingBottom: 10 }}>
+              <ShieldCheck size={24} color="rgba(255,255,255,0.2)" />
+            </div>
+          </div>
 
-          {/* Social buttons - 2x2 grid */}
           <div
             style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}
           >
@@ -227,69 +226,58 @@ export default function Footer() {
               <motion.a
                 key={label}
                 href="#"
-                aria-label={label}
                 whileHover={{
                   scale: 1.05,
-                  borderColor: "var(--lime)",
-                  color: "var(--lime)",
+                  background: "rgba(255,255,255,0.08)",
                 }}
                 style={{
-                  display: "inline-flex",
+                  display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: 10,
-                  padding: "16px 20px",
-                  borderRadius: 9999,
-                  border: "1px solid var(--border)",
-                  color: "var(--white)",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  transition: "all 0.2s",
+                  gap: 8,
+                  padding: "12px",
+                  borderRadius: 12,
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  color: "#fff",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  textDecoration: "none",
                 }}
               >
-                <Icon size={18} /> {label}
+                <Icon size={14} /> {label}
               </motion.a>
             ))}
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom Bar */}
         <div
           style={{
-            padding: "24px 0",
-            borderTop: "1px solid var(--border)",
+            padding: "32px 0",
+            borderTop: "1px solid rgba(255,255,255,0.05)",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            flexWrap: "wrap",
-            gap: 12,
+            fontSize: 11,
+            color: "rgba(255,255,255,0.3)",
+            fontWeight: 700,
+            letterSpacing: "0.05em",
           }}
         >
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
-            © Zaika {new Date().getFullYear()}. All Rights Reserved.
+          <p>
+            © ZAIKA NODE {new Date().getFullYear()}. ALL PROTOCOLS RESERVED.
           </p>
-          <div style={{ display: "flex", gap: 24 }}>
-            {["Terms and Conditions", "Privacy Policy", "PCI DSS Policy"].map(
-              (t) => (
-                <a
-                  key={t}
-                  href="#"
-                  style={{
-                    fontSize: 13,
-                    color: "rgba(255,255,255,0.7)",
-                    transition: "color 0.2s",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "var(--lime)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "rgba(255,255,255,0.7)")
-                  }
-                >
-                  {t}
-                </a>
-              ),
-            )}
+          <div style={{ display: "flex", gap: 32 }}>
+            {["SYSTEM TERMS", "PRIVACY DATA", "ENCRYPTION POLICY"].map((t) => (
+              <a
+                key={t}
+                href="#"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                {t}
+              </a>
+            ))}
           </div>
         </div>
       </div>

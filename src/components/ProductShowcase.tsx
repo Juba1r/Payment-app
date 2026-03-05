@@ -1,30 +1,31 @@
 "use client";
 import { motion } from "framer-motion";
-import { Globe, Smartphone, Store } from "lucide-react";
+import { Smartphone, LineChart, Globe } from "lucide-react";
+import { InteractiveGlassCard } from "./InteractiveGlassCard";
 
 const CHANNELS = [
   {
-    tag: "eCommerce",
+    tag: "eCOMMERCE",
     Icon: Globe,
-    title: "Online Checkout",
-    desc: "Integrate Zaika directly into your existing e-commerce checkout flow in minutes. Compatible with Shopify, WooCommerce, Magento, and custom builds.",
-    detail: "300+ integrations",
+    title: "Online Stores",
+    desc: "Our pre-built plugins work with Shopify, Magento, WooCommerce, Salesforce, PrestaShop, and Storefront. Plus, tailor our API to suit your exact stack.",
+    detail: "PLUG & PLAY",
     color: "var(--lime)",
   },
   {
-    tag: "POS Integration",
-    Icon: Store,
-    title: "In-Store Terminal",
-    desc: "Add split payment to your physical point-of-sale. Customers scan a QR code or tap their phone — done in seconds with zero card machine changes needed.",
-    detail: "Any POS system",
+    tag: "POS INTEGRATION",
+    Icon: LineChart,
+    title: "In-Store",
+    desc: "Seamless POS integration through leading partners. We are continuously expanding our POS partner list to keep your checkout smooth and conversion high.",
+    detail: "UNIVERSAL POS",
     color: "#60a5fa",
   },
   {
-    tag: "Soft Touch Integration",
+    tag: "SOFT TOUCH",
     Icon: Smartphone,
-    title: "Mobile & App",
-    desc: "Embed Zaika in your branded mobile app or offer a white-label progressive web app. Full SDK for iOS and Android with next-day payouts.",
-    detail: "iOS & Android SDK",
+    title: "Mobile QR",
+    desc: "Use the Zaika merchant app or static QR codes to get up and running in minutes. Cashless payments speed up queues and keep customers coming back.",
+    detail: "INSTANT SETUP",
     color: "#a78bfa",
   },
 ];
@@ -32,40 +33,84 @@ const CHANNELS = [
 export default function ProductShowcase() {
   return (
     <section
-      id="product-showcase"
+      id="channels"
       style={{
         background: "var(--black)",
-        padding: "100px 0",
-        borderTop: "1px solid var(--border)",
+        padding: "120px 0",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div className="container">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ marginBottom: 64 }}
-        >
-          <span
-            className="label"
-            style={{ color: "var(--lime)", display: "block", marginBottom: 16 }}
-          >
-            Seamless checkout wherever they shop
-          </span>
-          <h2 className="display display-lg" style={{ maxWidth: 640 }}>
-            Sell More,
-            <br />
-            <span style={{ color: "var(--lime)" }}>Everywhere.</span>
-          </h2>
-        </motion.div>
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 1,
+          background: "rgba(255,255,255,0.06)",
+        }}
+      />
 
-        {/* Channel cards — 3 col */}
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        {/* Header */}
         <div
           style={{
             display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 64,
+            alignItems: "flex-end",
+            marginBottom: 80,
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <span
+              style={{
+                color: "var(--lime)",
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                display: "block",
+                marginBottom: 20,
+              }}
+            >
+              Seamless Checkout Wherever They Shop
+            </span>
+            <h2
+              className="display display-lg"
+              style={{ color: "#fff", textTransform: "uppercase" }}
+            >
+              Omnichannel <span style={{ color: "var(--lime)" }}>Fluidity</span>
+            </h2>
+          </motion.div>
+
+          <motion.p
+            className="body-lg"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
+          >
+            Whether your customers shop online, in-store, or through their
+            phone, Zaika integrates seamlessly into every channel with zero
+            disruption to your existing workflow.
+          </motion.p>
+        </div>
+
+        {/* Cards */}
+        <div
+          className="perspective-world"
+          style={{
+            display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
+            gap: 24,
           }}
         >
           {CHANNELS.map((c, i) => (
@@ -73,111 +118,132 @@ export default function ProductShowcase() {
               key={c.tag}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              whileHover={{ y: -8, borderColor: "rgba(255,255,255,0.22)" }}
-              style={{
-                background: "var(--surface)",
-                border: "1px solid var(--border)",
-                borderRadius: 20,
-                padding: "36px 30px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 20,
-                cursor: "default",
-                transition: "border-color 0.25s, transform 0.25s",
-              }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.12 }}
+              style={{ height: "100%" }}
             >
-              {/* Icon */}
-              <div
+              <InteractiveGlassCard
+                className="glass-panel"
+                glowColor={`${c.color}18`}
                 style={{
-                  width: 52,
-                  height: 52,
-                  borderRadius: 16,
-                  background: `${c.color}18`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  height: "100%",
                 }}
               >
-                <c.Icon size={24} color={c.color} />
-              </div>
-
-              {/* Tag */}
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: "0.10em",
-                  textTransform: "uppercase",
-                  color: c.color,
-                }}
-              >
-                {c.tag}
-              </span>
-
-              <div>
-                <h3
-                  className="display display-sm"
-                  style={{ marginBottom: 12, color: "var(--white)" }}
-                >
-                  {c.title}
-                </h3>
-                <p className="body-md">{c.desc}</p>
-              </div>
-
-              {/* Detail pill */}
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                  padding: "7px 14px",
-                  borderRadius: 9999,
-                  background: `${c.color}14`,
-                  border: `1px solid ${c.color}30`,
-                  width: "fit-content",
-                }}
-              >
-                <span
+                <div
                   style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: c.color,
-                    flexShrink: 0,
+                    padding: "40px 32px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 24,
+                    height: "100%",
                   }}
-                />
-                <span style={{ fontSize: 12, fontWeight: 700, color: c.color }}>
-                  {c.detail}
-                </span>
-              </div>
+                >
+                  <div className="glass-glow-edge" />
 
-              <motion.button
-                className="btn-outline-white"
-                style={{
-                  width: "fit-content",
-                  fontSize: 12,
-                  padding: "9px 18px",
-                }}
-                whileHover={{
-                  borderColor: c.color,
-                  color: c.color,
-                  scale: 1.04,
-                }}
-                whileTap={{ scale: 0.97 }}
-                data-text="Learn more →"
-              >
-                <span>Learn more →</span>
-              </motion.button>
+                  {/* Icon */}
+                  <motion.div
+                    className="alive-icon"
+                    style={{
+                      width: 56,
+                      height: 56,
+                      borderRadius: 18,
+                      background: `${c.color}12`,
+                      border: `1px solid ${c.color}25`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transform: "translateZ(50px)",
+                    }}
+                  >
+                    <c.Icon size={26} color={c.color} />
+                  </motion.div>
+
+                  {/* Tag + title */}
+                  <div style={{ transform: "translateZ(30px)" }}>
+                    <span
+                      style={{
+                        fontSize: 10,
+                        fontWeight: 900,
+                        letterSpacing: "0.22em",
+                        textTransform: "uppercase",
+                        color: c.color,
+                        display: "block",
+                        marginBottom: 10,
+                      }}
+                    >
+                      {c.tag}
+                    </span>
+                    <h3
+                      className="display"
+                      style={{
+                        fontSize: "1.6rem",
+                        color: "#fff",
+                        fontWeight: 900,
+                      }}
+                    >
+                      {c.title}
+                    </h3>
+                  </div>
+
+                  {/* Body */}
+                  <p
+                    style={{
+                      fontSize: "0.95rem",
+                      lineHeight: 1.75,
+                      color: "rgba(255,255,255,0.5)",
+                      flex: 1,
+                    }}
+                  >
+                    {c.desc}
+                  </p>
+
+                  {/* Badge */}
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "8px 14px",
+                      borderRadius: 9999,
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      width: "fit-content",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        background: c.color,
+                        boxShadow: `0 0 8px ${c.color}`,
+                      }}
+                      className="animate-pulse-dot"
+                    />
+                    <span
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 800,
+                        color: "rgba(255,255,255,0.6)",
+                        letterSpacing: "0.1em",
+                      }}
+                    >
+                      {c.detail}
+                    </span>
+                  </div>
+                </div>
+              </InteractiveGlassCard>
             </motion.div>
           ))}
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 900px) { #product-showcase .container > div:last-child { grid-template-columns: 1fr !important; } }
-        @media (max-width: 640px) { #product-showcase .container > div:last-child { grid-template-columns: 1fr !important; } }
+        @media (max-width: 900px) {
+          #channels .container > div:last-child { grid-template-columns: 1fr !important; }
+          #channels .container > div:first-child { grid-template-columns: 1fr !important; gap: 32px !important; }
+        }
       `}</style>
     </section>
   );

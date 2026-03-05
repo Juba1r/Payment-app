@@ -1,288 +1,429 @@
 "use client";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import {
+  Menu,
+  X,
+  Rocket,
+  Cpu,
+  Shield,
+  Users,
+  Mail,
+  Activity,
+} from "lucide-react";
 import Link from "next/link";
 
 const NAV_LINKS = [
-  { label: "Solutions", href: "#solutions" },
-  { label: "Resources", href: "#resources" },
-  { label: "Help", href: "#help" },
+  { label: "Home", href: "#home", icon: Rocket },
+  { label: "Protocols", href: "#solutions", icon: Cpu },
+  { label: "Ecosystem", href: "#resources", icon: Shield },
+  { label: "Feedback", href: "#benefits", icon: Users },
+  { label: "Terminal", href: "#cta", icon: Mail },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("Home");
+  const navRef = useRef<HTMLDivElement>(null);
+
+  // 3D Tilt for the whole Navbar panel
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [10, -10]), {
+    stiffness: 150,
+    damping: 25,
+  });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-10, 10]), {
+    stiffness: 150,
+    damping: 25,
+  });
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const go = (href: string) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!navRef.current) return;
+    const rect = navRef.current.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    x.set(nx);
+    y.set(ny);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  const scrollTo = (href: string, label: string) => {
+    setActiveTab(label);
     setMobileOpen(false);
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <>
-      {/* ── Top toggle bar (Shopper / Business) ── */}
-      <div
+    <div
+      className="perspective-world"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 2000,
+        padding: scrolled ? "15px 0" : "25px 0",
+        pointerEvents: "none",
+        transition: "padding 0.4s cubic-bezier(0.19, 1, 0.22, 1)",
+      }}
+    >
+      <motion.div
+        ref={navRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         style={{
-          background: "#111",
-          borderBottom: "1px solid rgba(255,255,255,0.07)",
-          padding: "8px 0",
-          position: "sticky",
-          top: 0,
-          zIndex: 1001,
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+          pointerEvents: "auto",
+          width: "max-content",
+          margin: "0 auto",
         }}
-      >
-        <div
-          className="container"
-          style={{ display: "flex", alignItems: "center", gap: 8 }}
-        >
-          <a
-            href="#"
-            style={{
-              padding: "7px 22px",
-              borderRadius: 9999,
-              background: "transparent",
-              color: "rgba(255,255,255,0.5)",
-              fontWeight: 700,
-              fontSize: 13,
-              border: "1.5px solid rgba(255,255,255,0.15)",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")
-            }
-          >
-            Shopper
-          </a>
-          <div
-            style={{
-              padding: "7px 22px",
-              borderRadius: 9999,
-              background: "var(--lime)",
-              color: "var(--black)",
-              fontWeight: 800,
-              fontSize: 13,
-            }}
-          >
-            Business
-          </div>
-        </div>
-      </div>
-
-      {/* ── Main nav ── */}
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
+        initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-        style={{
-          position: "sticky",
-          top: 37,
-          zIndex: 1000,
-          padding: "0",
-          background: scrolled ? "rgba(8,8,8,0.95)" : "var(--off-black)",
-          backdropFilter: scrolled ? "blur(18px)" : "none",
-          borderBottom: "1px solid var(--border)",
-          transition: "all 0.3s ease",
-        }}
+        transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
       >
         <div
-          className="container"
+          className="glass-panel"
           style={{
+            padding: "8px 16px",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
-            height: 68,
+            gap: 12,
+            borderRadius: "9999px",
+            background: scrolled
+              ? "rgba(0, 0, 0, 0.85)"
+              : "rgba(255, 255, 255, 0.03)",
+            backdropFilter: "blur(24px) saturate(150%)",
+            border: scrolled
+              ? "1px solid rgba(255, 75, 75, 0.2)"
+              : "1px solid rgba(255, 255, 255, 0.08)",
+            boxShadow: scrolled
+              ? "0 25px 60px -15px rgba(0,0,0,0.8), 0 0 20px rgba(255,75,75,0.15)"
+              : "0 15px 40px -10px rgba(0,0,0,0.4)",
+            transition: "all 0.5s cubic-bezier(0.19, 1, 0.22, 1)",
+            transform: scrolled ? "scale(0.96)" : "scale(1)",
           }}
         >
-          {/* Logo */}
+          {/* Logo Section */}
           <Link
             href="/"
             style={{
+              marginRight: 12,
               display: "flex",
               alignItems: "center",
-              gap: 10,
-              fontFamily: "var(--font-display)",
-              fontSize: 26,
-              fontWeight: 900,
-              textTransform: "uppercase",
-              letterSpacing: "-0.02em",
+              gap: 12,
+              transform: "translateZ(30px)",
             }}
           >
-            <div
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 15 }}
               style={{
-                width: 36,
-                height: 36,
+                width: 38,
+                height: 38,
                 background: "var(--lime)",
-                borderRadius: 8,
+                borderRadius: "12px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                boxShadow: "0 0 25px rgba(255,75,75,0.4)",
               }}
             >
-              <span style={{ color: "#000", fontSize: 20, fontWeight: 900 }}>
+              <span style={{ color: "black", fontWeight: 900, fontSize: 20 }}>
                 Z
               </span>
+            </motion.div>
+
+            <div className="desktop-nav" style={{ overflow: "hidden" }}>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 900,
+                    color: "#fff",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  ZAIKA
+                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <div
+                    style={{
+                      width: 4,
+                      height: 4,
+                      borderRadius: "50%",
+                      background: "var(--lime)",
+                      boxShadow: "0 0 5px var(--lime)",
+                    }}
+                    className="animate-pulse-dot"
+                  />
+                  <span
+                    style={{
+                      fontSize: 8,
+                      fontWeight: 800,
+                      color: "var(--lime)",
+                      letterSpacing: "0.1em",
+                    }}
+                  >
+                    SYSTEM ONLINE
+                  </span>
+                </div>
+              </div>
             </div>
-            Zaika{" "}
-            <span
-              style={{
-                color: "var(--muted)",
-                fontSize: 13,
-                fontWeight: 500,
-                textTransform: "none",
-                letterSpacing: 0,
-                fontFamily: "var(--font-body)",
-                marginLeft: 2,
-              }}
-            >
-              For Business
-            </span>
           </Link>
 
-          {/* Desktop nav */}
-          <nav
-            style={{ display: "flex", alignItems: "center", gap: 4 }}
+          <div
+            style={{
+              width: 1,
+              height: 24,
+              background: "rgba(255,255,255,0.1)",
+              margin: "0 8px",
+            }}
             className="desktop-nav"
+          />
+
+          {/* Desktop Nav Items */}
+          <nav
+            className="flex items-center gap-1 desktop-nav"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            {NAV_LINKS.map((n) => (
-              <a
-                key={n.label}
-                href={n.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  go(n.href);
-                }}
-                className="hover-lime"
-                style={{
-                  padding: "10px 18px",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: "rgba(255,255,255,0.7)",
-                  borderRadius: 9999,
-                  transition: "all 0.2s",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "rgba(255,255,255,0.06)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "transparent")
-                }
-              >
-                {n.label} ↓
-              </a>
+            {NAV_LINKS.map((link) => (
+              <NavButton
+                key={link.label}
+                isActive={activeTab === link.label}
+                onClick={() => scrollTo(link.href, link.label)}
+                label={link.label}
+              />
             ))}
           </nav>
 
-          {/* CTAs */}
+          {/* Activity / Notification 3D Icon (Purely Visual) */}
           <div
-            style={{ display: "flex", gap: 10, alignItems: "center" }}
             className="desktop-nav"
+            style={{
+              transform: "translateZ(20px)",
+              margin: "0 10px",
+              opacity: 0.4,
+            }}
+          >
+            <Activity size={16} color="var(--lime)" />
+          </div>
+
+          <div
+            className="ml-2 desktop-nav"
+            style={{ transform: "translateZ(40px)" }}
           >
             <button
-              className="btn-outline-white"
-              style={{ fontSize: 13, padding: "9px 20px" }}
-              data-text="Log In"
-            >
-              <span>Log In</span>
-            </button>
-            <button
               className="btn-lime"
-              style={{ fontSize: 13, padding: "9px 20px" }}
-              onClick={() => go("#cta")}
-              data-text="Business Application"
+              style={{
+                padding: "10px 24px",
+                fontSize: 12,
+                borderRadius: 9999,
+                boxShadow: "0 10px 25px rgba(255,75,75,0.25)",
+              }}
+              data-text="INITIATE SYNC"
             >
-              <span>Business Application</span>
+              <span>INITIATE SYNC</span>
             </button>
           </div>
 
-          {/* Hamburger */}
+          {/* Hamburger (Mobile) */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
+            className="mobile-hamburger"
             style={{
+              width: 44,
+              height: 44,
               display: "none",
-              width: 42,
-              height: 42,
-              borderRadius: 10,
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              color: "#fff",
               alignItems: "center",
               justifyContent: "center",
+              color: mobileOpen ? "var(--lime)" : "white",
+              transform: "translateZ(20px)",
+              transition: "color 0.3s",
             }}
-            className="mobile-hamburger"
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-      </motion.header>
+      </motion.div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu - 3D Expansion */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            key="mob"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, scale: 0.95, y: -20, rotateX: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -20, rotateX: -20 }}
+            className="glass-panel"
             style={{
-              position: "fixed",
-              top: 105,
-              left: 0,
-              right: 0,
-              zIndex: 999,
-              background: "var(--off-black)",
-              borderBottom: "1px solid var(--border)",
-              padding: "16px 20px",
+              position: "absolute",
+              top: scrolled ? 80 : 100,
+              left: 20,
+              right: 20,
+              padding: 24,
               display: "flex",
               flexDirection: "column",
-              gap: 4,
+              gap: 12,
+              zIndex: 1999,
+              pointerEvents: "auto",
+              boxShadow: "0 40px 100px rgba(0,0,0,0.8)",
+              border: "1px solid rgba(255,75,75,0.2)",
             }}
           >
-            {NAV_LINKS.map((n) => (
-              <a
-                key={n.label}
-                href={n.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  go(n.href);
-                }}
+            {NAV_LINKS.map((link) => (
+              <button
+                key={link.label}
+                onClick={() => scrollTo(link.href, link.label)}
                 style={{
-                  padding: "14px 16px",
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: "rgba(255,255,255,0.75)",
+                  padding: "16px",
+                  textAlign: "left",
+                  fontSize: 16,
+                  fontWeight: 900,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: activeTab === link.label ? "var(--lime)" : "#fff",
+                  background:
+                    activeTab === link.label
+                      ? "rgba(255,75,75,0.05)"
+                      : "transparent",
                   borderRadius: 12,
-                  transition: "all 0.2s",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  transition: "all 0.3s",
                 }}
               >
-                {n.label}
-              </a>
+                {link.label}
+                {activeTab === link.label && (
+                  <div
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: "var(--lime)",
+                    }}
+                  />
+                )}
+              </button>
             ))}
+
             <button
               className="btn-lime"
-              onClick={() => go("#cta")}
-              style={{ marginTop: 8, justifyContent: "center" }}
-              data-text="Business Application"
+              style={{ marginTop: 12, width: "100%", padding: 18 }}
             >
-              <span>Business Application</span>
+              <span>INITIATE PROTOCOL</span>
             </button>
           </motion.div>
         )}
       </AnimatePresence>
 
       <style>{`
-        @media (min-width: 768px) { .desktop-nav { display: flex !important; } .mobile-hamburger { display: none !important; } }
-        @media (max-width: 767px) { .desktop-nav { display: none !important; } .mobile-hamburger { display: flex !important; } }
+        @media (max-width: 900px) {
+          .desktop-nav { display: none !important; }
+          .mobile-hamburger { display: flex !important; }
+        }
       `}</style>
-    </>
+    </div>
+  );
+}
+
+function NavButton({
+  isActive,
+  onClick,
+  label,
+}: {
+  isActive: boolean;
+  onClick: () => void;
+  label: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.button
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={onClick}
+      style={{
+        padding: "8px 18px",
+        borderRadius: 9999,
+        position: "relative",
+        color: isActive ? "#fff" : "rgba(255,255,255,0.5)",
+        fontWeight: 800,
+        fontSize: 12,
+        letterSpacing: "0.05em",
+        textTransform: "uppercase",
+        transformStyle: "preserve-3d",
+        transition: "all 0.3s ease",
+      }}
+      animate={{
+        z: hovered ? 30 : 0,
+        scale: hovered ? 1.05 : 1,
+        y: hovered ? -2 : 0,
+      }}
+    >
+      <span style={{ position: "relative", zIndex: 1 }}>{label}</span>
+
+      {/* Active pill indicator */}
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            key="active-pill"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.25 }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: 9999,
+              background: "rgba(255, 75, 75, 0.1)",
+              border: "1px solid rgba(255, 75, 75, 0.2)",
+              boxShadow: "0 0 20px rgba(255, 75, 75, 0.15)",
+              zIndex: 0,
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Hover underline */}
+      <AnimatePresence>
+        {hovered && !isActive && (
+          <motion.div
+            key="hover-underline"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: "40%", opacity: 1 }}
+            exit={{ width: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              position: "absolute",
+              bottom: 4,
+              left: "30%",
+              height: 1.5,
+              background: "var(--lime)",
+              boxShadow: "0 0 12px var(--lime)",
+              borderRadius: 2,
+            }}
+          />
+        )}
+      </AnimatePresence>
+    </motion.button>
   );
 }

@@ -1,21 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap");
 @import "tailwindcss";
 
 /* ─── Tokens ─── */
 :root {
-  --black: #080808;
-  --off-black: #0f0f0f;
-  --surface: #161616;
-  --surface2: #1e1e1e;
-  --border: rgba(255, 255, 255, 0.1);
+  --black: #050505;
+  --off-black: #0c0c0e;
+  --surface: #121216;
+  /* ─── Color Tokens ─── */
+  --lime: #ff4b4b; /* Updated to Sweet Red */
+  --lime-dim: rgba(255, 75, 75, 0.15);
+  --surface-glass: rgba(20, 20, 25, 0.5);
+  --surface2: #1e1e24;
+  --border: rgba(255, 255, 255, 0.08);
   --border2: rgba(255, 255, 255, 0.06);
-  --lime: #ff4b4b;
-  --lime-dim: #e63e3e;
   --white: #ffffff;
   --muted: rgba(255, 255, 255, 0.5);
   --radius-card: 20px;
-  --font-display: "Barlow Condensed", "Inter", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --font-display: var(--font-barlow), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
 }
 
 /* ─── Reset ─── */
@@ -160,21 +161,6 @@ img {
   transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   z-index: -1;
 }
-.btn-lime::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  font-weight: inherit;
-  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-  opacity: 0;
-  z-index: 2;
-}
 .btn-lime:hover::after {
   transform: translate(-50%, -50%) scale(1);
 }
@@ -183,17 +169,15 @@ img {
   box-shadow: inset 0 0 0 1.5px var(--off-black);
 }
 .btn-lime span {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 1;
   transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.btn-lime:hover > span {
-  transform: translateY(-150%);
-}
-.btn-lime:hover::before {
-  transform: translate(-50%, -100%) translateY(-14px); /* depends on padding */
-  opacity: 1;
+.btn-lime:hover span {
+  transform: translateX(4px);
 }
 
 .btn-outline-white {
@@ -227,40 +211,23 @@ img {
   transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   z-index: -1;
 }
-.btn-outline-white::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  font-weight: inherit;
-  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-  opacity: 0;
-  z-index: 2;
-}
 .btn-outline-white:hover::after {
   transform: translate(-50%, -50%) scale(1);
 }
 .btn-outline-white:hover {
-  color: var(--black);
+  color: #000 !important;
   box-shadow: inset 0 0 0 1.5px var(--lime);
 }
 .btn-outline-white span {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 1;
   transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.btn-outline-white:hover > span {
-  transform: translateY(-150%);
-}
-.btn-outline-white:hover::before {
-  transform: translate(-50%, -100%) translateY(-12px);
-  opacity: 1;
+.btn-outline-white:hover span {
+  transform: translateX(4px);
 }
 
 .btn-dark {
@@ -292,37 +259,19 @@ img {
   transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   z-index: -1;
 }
-.btn-dark::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  font-weight: inherit;
-  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-  opacity: 0;
-  z-index: 2;
-  color: var(--black);
-}
 .btn-dark:hover::after {
   transform: translate(-50%, -50%) scale(1);
 }
 .btn-dark span {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 1;
   transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.btn-dark:hover > span {
-  transform: translateY(-150%);
-}
-.btn-dark:hover::before {
-  transform: translate(-50%, -100%) translateY(-12px);
-  opacity: 1;
+.btn-dark:hover span {
+  transform: translateX(4px);
 }
 
 /* ─── Cards ─── */
@@ -331,26 +280,90 @@ img {
   border: 1px solid var(--border);
   border-radius: 24px;
   overflow: hidden;
+  position: relative;
   transition:
-    border-color 0.4s cubic-bezier(0.19, 1, 0.22, 1),
-    transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    border-color 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+    transform 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+    filter 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+  transform: perspective(1000px);
+}
+.card-dark::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0s;
+  pointer-events: none;
+  z-index: 5;
+}
+.card-dark:hover::before {
+  left: 150%;
+  transition: 0.85s cubic-bezier(0.19, 1, 0.22, 1);
 }
 .card-dark:hover {
   border-color: var(--lime);
+  transform: translateY(-12px) scale(1.02) rotateX(2deg) rotateY(-2deg);
+  box-shadow: 0 40px 80px -15px rgba(255, 75, 75, 0.35);
+  filter: brightness(1.1);
+}
+.card-dark:hover .card-text-content {
+  transform: translateX(12px) translateY(-4px);
+}
+.card-dark:hover h3 {
+  color: var(--lime) !important;
+  transform: translateZ(20px);
+  text-shadow: 0 10px 20px rgba(255, 75, 75, 0.2);
+}
+.card-dark:hover .btn-dark,
+.card-dark:hover .btn-outline-white {
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 .card-dark .image-inner-wrap {
   overflow: hidden;
   border-radius: 16px;
-  transition: border-radius 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+  transition:
+    border-radius 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+    transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.card-dark .image-inner-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--lime);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+  z-index: 10;
+}
+.card-dark:hover .image-inner-wrap {
+  transform: scale(0.98); /* slight compression for 3D feel */
+}
+.card-dark:hover .image-inner-wrap::after {
+  opacity: 0.45;
 }
 .card-dark:hover .pill-on-hover {
   border-radius: 10rem !important;
+  box-shadow: 0 0 40px rgba(255, 75, 75, 0.4);
 }
 .card-dark .image-inner {
-  transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
 .card-dark:hover .image-inner {
-  transform: scale(1.15);
+  transform: scale(1.22) rotate(2deg);
 }
 
 /* ─── Stat accordion cards ─── */
@@ -377,6 +390,29 @@ img {
   background: var(--lime);
   color: var(--black);
 }
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.alive-icon {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Enhancing card child interactions */
+.card-dark:hover .tag {
+  transform: scale(1.1) rotate(-2deg);
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.card-dark:hover .pill-on-hover {
+  border-radius: 9999px !important;
+  box-shadow: 0 0 30px rgba(255, 75, 75, 0.3);
+}
 .tag-dark {
   background: var(--surface2);
   color: var(--white);
@@ -385,6 +421,67 @@ img {
 .tag-white {
   background: var(--white);
   color: var(--black);
+}
+
+/* ─── High-End Glassmorphism & 3D Cards ─── */
+.glass-panel {
+  background: var(--surface-glass);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.glass-glow-edge {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2),
+    transparent 50%,
+    rgba(255, 75, 75, 0.2)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.4;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.card-dark:hover .glass-glow-edge {
+  opacity: 1;
+}
+
+/* ─── Global 3D Perspective ─── */
+.perspective-world {
+  perspective: 1200px;
+}
+
+/* ─── Background Particle Grid Effect ─── */
+.particle-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at 2px 2px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 0
+  );
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* ─── Divider ─── */

@@ -1,25 +1,33 @@
 "use client";
+import React from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { ArrowRight, Cpu, Smartphone, Globe } from "lucide-react";
+import { InteractiveGlassCard } from "./InteractiveGlassCard";
 
 const RESOURCES = [
   {
     tag: "MERCHANT PORTAL",
-    desc: "See the latest business updates, marketing opportunities, onboarding information and more.",
-    cta: "Read more",
-    imgSrc: "/hero-blob.png",
+    title: "Business Dashboard",
+    desc: "View real-time analytics, marketing opportunities, onboarding progress, and transaction history — all in one sleek merchant hub.",
+    cta: "ACCESS PORTAL",
+    Icon: Cpu,
+    color: "var(--lime)",
   },
   {
-    tag: "PAYUP APP",
-    desc: "Want a loadshedding-proof transaction process? Complete offline payments from anywhere using the PayUp App.",
-    cta: "Learn more",
-    imgSrc: "/hero-blob.png",
+    tag: "ZAIKA PAY APP",
+    title: "Mobile Terminal",
+    desc: "Complete offline payments from anywhere. Full offline synchronisation ensures you never miss a sale — even without connectivity.",
+    cta: "GET THE APP",
+    Icon: Smartphone,
+    color: "#60a5fa",
   },
   {
     tag: "INTEGRATIONS",
-    desc: "Add us as a payment method on your website by using our pre-built plugins or custom API's.",
-    cta: "Learn more",
-    imgSrc: "/hero-blob.png",
+    title: "Developer API",
+    desc: "Add Zaika as a payment method with our pre-built plugins or use our flexible REST API to build a fully custom integration.",
+    cta: "VIEW DOCS",
+    Icon: Globe,
+    color: "#a78bfa",
   },
 ];
 
@@ -29,141 +37,198 @@ export default function MetricsSection() {
       id="resources"
       style={{
         background: "var(--black)",
-        padding: "100px 0",
+        padding: "120px 0",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div className="container">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ marginBottom: 40 }}
-        >
-          <h2
-            className="display display-md"
-            style={{
-              textTransform: "none",
-              fontWeight: 400,
-              color: "var(--white)",
-            }}
-          >
-            Get started with these resources
-          </h2>
-        </motion.div>
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 1,
+          background: "rgba(255,255,255,0.06)",
+        }}
+      />
 
-        {/* Resource cards */}
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        {/* Header */}
         <div
           style={{
             display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 64,
+            alignItems: "flex-end",
+            marginBottom: 80,
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <span
+              style={{
+                color: "var(--lime)",
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                display: "block",
+                marginBottom: 20,
+              }}
+            >
+              Get Started With Resources
+            </span>
+            <h2
+              className="display display-lg"
+              style={{ color: "#fff", textTransform: "uppercase" }}
+            >
+              Built For <span style={{ color: "var(--lime)" }}>Merchants</span>
+            </h2>
+          </motion.div>
+
+          <motion.p
+            className="body-lg"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
+          >
+            A cohesive suite of tools designed to help you onboard fast, manage
+            payments effortlessly, and grow your business across every channel.
+          </motion.p>
+        </div>
+
+        {/* Resource cards */}
+        <div
+          className="perspective-world"
+          style={{
+            display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 20,
+            gap: 24,
           }}
         >
           {RESOURCES.map((r, i) => (
             <motion.div
               key={r.tag}
-              initial={{ opacity: 0, y: 36 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              whileHover={{ y: -8 }}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-                cursor: "default",
-                transition: "transform 0.25s",
-              }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.12 }}
+              style={{ height: "100%" }}
             >
-              {/* Image */}
-              <div
-                className="image-inner-wrap"
+              <InteractiveGlassCard
+                glowColor={`${r.color}18`}
                 style={{
-                  position: "relative",
-                  width: "100%",
-                  aspectRatio: "1.2",
-                  borderRadius: 24,
-                  overflow: "hidden",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  height: "100%",
+                  background: "rgba(255,255,255,0.01)",
                 }}
               >
-                <Image
-                  src={r.imgSrc}
-                  alt={r.tag}
-                  fill
-                  className="image-inner"
+                <div
                   style={{
-                    objectFit: "cover",
-                    transition: "transform 0.8s cubic-bezier(0.19, 1, 0.22, 1)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 24,
+                    padding: "40px 32px",
+                    height: "100%",
                   }}
-                />
-              </div>
+                >
+                  <div className="glass-glow-edge" />
 
-              {/* Pill Header */}
-              <div
-                style={{
-                  border: "1px solid var(--border)",
-                  borderRadius: 9999,
-                  padding: "16px",
-                  textAlign: "center",
-                  background: "var(--black)",
-                }}
-              >
-                <span
-                  className="display"
-                  style={{
-                    fontSize: "2rem",
-                    color: "var(--white)",
-                  }}
-                >
-                  {r.tag}
-                </span>
-              </div>
+                  {/* Icon */}
+                  <div
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: 16,
+                      background: `${r.color}12`,
+                      border: `1px solid ${r.color}25`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transform: "translateZ(40px)",
+                    }}
+                  >
+                    <r.Icon size={24} color={r.color} />
+                  </div>
 
-              {/* Content Box */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 24,
-                  padding: "16px 20px",
-                  flex: 1,
-                  justifyContent: "space-between",
-                }}
-              >
-                <p
-                  className="body-md"
-                  style={{
-                    textAlign: "center",
-                    color: "var(--white)",
-                    opacity: 0.85,
-                    fontSize: "0.95rem",
-                    lineHeight: 1.6,
-                    margin: 0,
-                  }}
-                >
-                  {r.desc}
-                </p>
-                <button
-                  className="btn-outline-white"
-                  style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    fontWeight: "normal",
-                    padding: "16px",
-                  }}
-                  data-text={r.cta}
-                >
-                  <span>{r.cta}</span>
-                </button>
-              </div>
+                  {/* Tag + Title */}
+                  <div style={{ transform: "translateZ(30px)" }}>
+                    <span
+                      style={{
+                        fontSize: 10,
+                        fontWeight: 900,
+                        letterSpacing: "0.22em",
+                        color: r.color,
+                        textTransform: "uppercase",
+                        display: "block",
+                        marginBottom: 10,
+                      }}
+                    >
+                      {r.tag}
+                    </span>
+                    <h3
+                      className="display"
+                      style={{
+                        fontSize: "1.5rem",
+                        color: "#fff",
+                        fontWeight: 900,
+                      }}
+                    >
+                      {r.title}
+                    </h3>
+                  </div>
+
+                  {/* Description */}
+                  <p
+                    style={{
+                      fontSize: "0.95rem",
+                      lineHeight: 1.75,
+                      color: "rgba(255,255,255,0.5)",
+                      flex: 1,
+                    }}
+                  >
+                    {r.desc}
+                  </p>
+
+                  {/* CTA */}
+                  <motion.button
+                    whileHover={{ x: 4 }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      background: "none",
+                      border: "none",
+                      color: r.color,
+                      fontSize: 12,
+                      fontWeight: 900,
+                      cursor: "pointer",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      padding: 0,
+                    }}
+                  >
+                    {r.cta} <ArrowRight size={14} />
+                  </motion.button>
+                </div>
+              </InteractiveGlassCard>
             </motion.div>
           ))}
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 860px) { #resources .container > div:last-child { grid-template-columns: 1fr !important; } }
+        @media (max-width: 860px) {
+          #resources .container > div:last-child { grid-template-columns: 1fr !important; }
+          #resources .container > div:first-child { grid-template-columns: 1fr !important; gap: 32px !important; }
+        }
       `}</style>
     </section>
   );
