@@ -1,0 +1,14 @@
+
+D:\Official Space\Antigravity\Zaika\zaika-app\src\app\layout.tsx
+  38:9  warning  Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font  @next/next/no-page-custom-font
+
+D:\Official Space\Antigravity\Zaika\zaika-app\src\components\HowItWorks.tsx
+  2:18  warning  'useScroll' is defined but never used     @typescript-eslint/no-unused-vars
+  2:29  warning  'useTransform' is defined but never used  @typescript-eslint/no-unused-vars
+  3:10  warning  'useRef' is defined but never used        @typescript-eslint/no-unused-vars
+
+D:\Official Space\Antigravity\Zaika\zaika-app\src\components\Navbar.tsx
+  106:11  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+✖ 5 problems (1 error, 4 warnings)
+
