@@ -24,7 +24,7 @@ const CHANNELS = [
     tag: "SOFT TOUCH",
     Icon: Smartphone,
     title: "Mobile QR",
-    desc: "Use the Zaika merchant app or static QR codes to get up and running in minutes. Cashless payments speed up queues and keep customers coming back.",
+    desc: "Use the Payside merchant app or static QR codes to get up and running in minutes. Cashless payments speed up queues and keep customers coming back.",
     detail: "INSTANT SETUP",
     color: "#a78bfa",
   },
@@ -99,7 +99,7 @@ export default function ProductShowcase() {
             style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
           >
             Whether your customers shop online, in-store, or through their
-            phone, Zaika integrates seamlessly into every channel with zero
+            phone, Payside integrates seamlessly into every channel with zero
             disruption to your existing workflow.
           </motion.p>
         </div>

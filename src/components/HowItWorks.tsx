@@ -98,23 +98,35 @@ export default function HowItWorks() {
             className="body-lg"
             style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
           >
-            Zaika connects your business to a growing community of shoppers with
-            spend-facility available. The broader our network, the bigger the
-            opportunity for you.
+            Payside connects your business to a growing community of shoppers
+            with spend-facility available. The broader our network, the bigger
+            the opportunity for you.
           </p>
         </motion.div>
 
         {/* Accordion stat cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 24,
+            paddingBottom: "10vh",
+          }}
+        >
           {STATS.map((s, i) => {
             const isOpen = activeIdx === i;
             return (
               <motion.div
                 key={s.label}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ margin: "-50px", once: false }}
+                transition={{ duration: 0.6, delay: i * 0.05 }}
+                style={{
+                  position: "sticky",
+                  top: `calc(15vh + ${i * 25}px)`,
+                  zIndex: i + 2,
+                }}
               >
                 <InteractiveGlassCard
                   glowColor={`${s.color}22`}
@@ -122,23 +134,28 @@ export default function HowItWorks() {
                   style={{
                     cursor: "pointer",
                     padding: 0,
-                    borderRadius: 0,
-                    border: "none",
-                    borderBottom: "1px solid rgba(255,255,255,0.06)",
+                    borderRadius: 24,
+                    border: "1px solid rgba(255,255,255,0.08)",
                     background: isOpen
-                      ? "rgba(255,255,255,0.02)"
-                      : "transparent",
-                    transition: "background 0.4s",
+                      ? "rgba(20, 20, 22, 0.95)"
+                      : "rgba(10, 10, 12, 0.8)",
+                    backdropFilter: "blur(20px)",
+                    transition: "all 0.4s",
+                    boxShadow: "0 -10px 40px rgba(0,0,0,0.5)",
                   }}
                 >
-                  <div onClick={() => setActiveIdx(isOpen ? null : i)}>
+                  <div
+                    onClick={() => setActiveIdx(isOpen ? null : i)}
+                    className="accordion-inner"
+                    style={{ padding: "0 40px" }}
+                  >
                     {/* Always-visible row */}
                     <div
                       style={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
-                        padding: "28px 0",
+                        padding: "32px 0",
                         transform: "translateZ(20px)",
                       }}
                     >
@@ -220,11 +237,12 @@ export default function HowItWorks() {
                           style={{ overflow: "hidden" }}
                         >
                           <div
+                            className="accordion-body-grid"
                             style={{
                               paddingBottom: 40,
                               display: "grid",
                               gridTemplateColumns: "1fr auto",
-                              gap: 40,
+                              gap: 24,
                               alignItems: "flex-end",
                             }}
                           >
@@ -269,6 +287,25 @@ export default function HowItWorks() {
       <style>{`
         @media (max-width: 900px) {
           #how-it-works .container > div:first-child { grid-template-columns: 1fr !important; gap: 32px !important; }
+        }
+        @media (max-width: 650px) {
+          .accordion-body-grid {
+            grid-template-columns: 1fr !important;
+            text-align: left !important;
+            align-items: flex-start !important;
+          }
+          .accordion-body-grid > div {
+            text-align: left !important;
+            margin-top: 10px;
+          }
+          .accordion-body-grid > p {
+            font-size: 0.95rem !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .accordion-inner {
+            padding: 0 20px !important;
+          }
         }
       `}</style>
     </section>

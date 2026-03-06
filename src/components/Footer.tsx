@@ -5,278 +5,231 @@ import {
   Linkedin,
   Facebook,
   Instagram,
-  Music,
-  ShieldCheck,
-  Cpu,
+  Twitter,
+  ArrowRight,
 } from "lucide-react";
-import { InteractiveGlassCard } from "./InteractiveGlassCard";
 
-const COLS = [
+const FOOTER_LINKS = [
   {
-    head: "CORE SYSTEM",
-    links: [
-      "NEURAL NETWORK",
-      "QUANTUM FAQS",
-      "PRESS ARCHIVE",
-      "ENCRYPTED HELP",
-    ],
+    title: "Platform",
+    links: ["Overview", "Split Payments", "Performance Marketing", "Pricing"],
   },
   {
-    head: "PROTOCOLS",
-    links: [
-      "BNPL 2.0",
-      "SPATIAL CREDIT",
-      "NEURAL MARKETING",
-      "REQUEST UPLINK",
-      "NODE SUPPORT",
-    ],
+    title: "Company",
+    links: ["About Us", "Careers", "Press", "Contact"],
   },
   {
-    head: "INFRASTRUCTURE",
-    links: [
-      "CORE PORTAL",
-      "PAYUP INTERFACE",
-      "STATUS MODULE",
-      "PROTOCOL MANUAL",
-      "DATA SAFETY",
-    ],
+    title: "Resources",
+    links: ["Blog", "Help Center", "Developer API", "Partners"],
   },
 ];
 
 const SOCIAL = [
-  { Icon: Linkedin, label: "LKD" },
-  { Icon: Music, label: "TKT" },
-  { Icon: Facebook, label: "FBK" },
-  { Icon: Instagram, label: "IGM" },
+  { Icon: Linkedin, href: "#" },
+  { Icon: Twitter, href: "#" },
+  { Icon: Facebook, href: "#" },
+  { Icon: Instagram, href: "#" },
 ];
 
 export default function Footer() {
   return (
     <footer
-      className="perspective-world"
       style={{
-        background: "#000",
+        background: "#080808",
         paddingTop: 120,
         position: "relative",
+        borderTop: "1px solid rgba(255,54,88,0.1)",
         overflow: "hidden",
       }}
     >
-      <div className="particle-grid" style={{ opacity: 0.2 }} />
+      {/* Background Glow */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "80%",
+          height: "300px",
+          background:
+            "radial-gradient(ellipse at top, rgba(255,54,88,0.08) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
 
-      <div className="container" style={{ position: "relative", zIndex: 1 }}>
-        {/* ── Link grid + Contact block ── */}
+      <div
+        className="container"
+        style={{ position: "relative", zIndex: 1, paddingBottom: 40 }}
+      >
+        {/* Top CTA */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "3fr 1fr",
-            gap: 24,
-            marginBottom: 24,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            marginBottom: 100,
           }}
         >
-          {/* Left: Glass Panel for Links */}
-          <InteractiveGlassCard
-            glowColor="rgba(255, 75, 75, 0.1)"
-            className="glass-panel"
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="display"
             style={{
-              padding: "48px",
-              display: "grid",
-              gridTemplateColumns: "repeat(3,1fr)",
-              gap: 24,
-              border: "1px solid rgba(255,255,255,0.05)",
+              color: "#fff",
+              marginBottom: 24,
+              fontSize: "clamp(2.5rem, 5vw, 4rem)",
+              fontWeight: 900,
             }}
           >
-            {COLS.map((col) => (
-              <div
-                key={col.head}
-                style={{ display: "flex", flexDirection: "column", gap: 20 }}
-              >
-                <span
-                  style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 800,
-                    color: "var(--lime)",
-                    letterSpacing: "0.2em",
-                    textTransform: "uppercase",
-                    marginBottom: 12,
-                  }}
-                >
-                  {col.head}
-                </span>
-                {col.links.map((l) => (
-                  <motion.a
-                    key={l}
-                    href="#"
-                    style={{
-                      fontSize: 12,
-                      color: "rgba(255,255,255,0.4)",
-                      fontWeight: 600,
-                      letterSpacing: "0.05em",
-                      textDecoration: "none",
-                    }}
-                    whileHover={{ x: 5, color: "#fff" }}
-                  >
-                    {l}
-                  </motion.a>
-                ))}
-              </div>
-            ))}
-          </InteractiveGlassCard>
-
-          {/* Right: Contact & Scale */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            <InteractiveGlassCard
-              glowColor="rgba(255, 75, 75, 0.2)"
-              className="glass-panel"
-              style={{
-                padding: "32px 24px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 16,
-                border: "1px solid rgba(255,255,255,0.05)",
-              }}
-            >
-              <Cpu size={24} color="var(--lime)" style={{ marginBottom: 4 }} />
-              <motion.button
-                className="btn-lime"
-                whileHover={{ scale: 1.05 }}
-                style={{ width: "100%", padding: "12px", fontSize: 13 }}
-              >
-                <span>OPEN UPLINK</span>
-              </motion.button>
-              <div style={{ textAlign: "center" }}>
-                <a
-                  href="mailto:ops@zaika.network"
-                  style={{ fontSize: 11, color: "#60a5fa", fontWeight: 700 }}
-                >
-                  OPS@ZAIKA.NETWORK
-                </a>
-              </div>
-            </InteractiveGlassCard>
-
-            <InteractiveGlassCard
-              className="glass-panel"
-              style={{
-                padding: "24px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid rgba(255,255,255,0.05)",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.4)",
-                  fontWeight: 800,
-                  letterSpacing: "0.1em",
-                  marginBottom: 4,
-                }}
-              >
-                A NODE OF
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: 20,
-                  fontWeight: 900,
-                  color: "#fff",
-                }}
-              >
-                WEAVER <span style={{ color: "#FF4B4B" }}>FINTECH</span>
-              </span>
-            </InteractiveGlassCard>
-          </div>
+            Ready to <span style={{ color: "#FF3658" }}>boost</span> your sales?
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            style={{
+              color: "rgba(255,255,255,0.6)",
+              fontSize: "1.1rem",
+              marginBottom: 40,
+              maxWidth: 600,
+              lineHeight: 1.6,
+            }}
+          >
+            Join thousands of merchants using Payside to offer flexible payment
+            options and exponentially grow their business.
+          </motion.p>
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="btn-lime"
+            whileHover={{ scale: 1.05 }}
+            style={{
+              padding: "16px 32px",
+              fontSize: 15,
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+            }}
+          >
+            <span>Get Started Now</span>
+            <ArrowRight size={18} />
+          </motion.button>
         </div>
 
-        {/* ── Brand & Social ── */}
+        {/* Main Footer Links */}
         <div
+          className="footer-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "3fr 1fr",
-            gap: 24,
-            marginBottom: 64,
-            alignItems: "center",
+            gridTemplateColumns: "2fr 1fr 1fr 1fr",
+            gap: 64,
+            marginBottom: 80,
           }}
         >
-          <div style={{ display: "flex", alignItems: "flex-end", gap: 16 }}>
+          <div>
             <span
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(3rem, 6vw, 6rem)",
+                fontSize: "2.5rem",
                 fontWeight: 900,
                 textTransform: "uppercase",
                 letterSpacing: "-0.04em",
-                lineHeight: 0.8,
                 color: "#fff",
+                display: "block",
+                marginBottom: 24,
               }}
             >
-              ZAIKA<span style={{ color: "var(--lime)" }}>.</span>
+              PAYSIDE<span style={{ color: "#FF3658" }}>.</span>
             </span>
-            <div style={{ paddingBottom: 10 }}>
-              <ShieldCheck size={24} color="rgba(255,255,255,0.2)" />
-            </div>
+            <p
+              style={{
+                color: "rgba(255,255,255,0.5)",
+                lineHeight: 1.6,
+                fontSize: "0.95rem",
+                maxWidth: 300,
+              }}
+            >
+              Empowering businesses with intelligent payment solutions,
+              performance marketing, and seamless integrations.
+            </p>
           </div>
 
-          <div
-            style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}
-          >
-            {SOCIAL.map(({ Icon, label }) => (
-              <motion.a
-                key={label}
-                href="#"
-                whileHover={{
-                  scale: 1.05,
-                  background: "rgba(255,255,255,0.08)",
-                }}
+          {FOOTER_LINKS.map((col) => (
+            <div key={col.title}>
+              <h4
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                  padding: "12px",
-                  borderRadius: 12,
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.05)",
                   color: "#fff",
-                  fontSize: 11,
-                  fontWeight: 800,
-                  textDecoration: "none",
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  marginBottom: 24,
                 }}
               >
-                <Icon size={14} /> {label}
-              </motion.a>
-            ))}
-          </div>
+                {col.title}
+              </h4>
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 16,
+                }}
+              >
+                {col.links.map((link) => (
+                  <li key={link}>
+                    <motion.a
+                      href="#"
+                      style={{
+                        color: "rgba(255,255,255,0.6)",
+                        textDecoration: "none",
+                        fontSize: "0.95rem",
+                        display: "inline-block",
+                      }}
+                      whileHover={{ color: "#FF3658", x: 4 }}
+                    >
+                      {link}
+                    </motion.a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         {/* Bottom Bar */}
         <div
+          className="footer-bottom"
           style={{
-            padding: "32px 0",
-            borderTop: "1px solid rgba(255,255,255,0.05)",
+            padding: "32px 0 0 0",
+            borderTop: "1px solid rgba(255,255,255,0.1)",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            fontSize: 11,
-            color: "rgba(255,255,255,0.3)",
-            fontWeight: 700,
-            letterSpacing: "0.05em",
           }}
         >
-          <p>
-            © ZAIKA NODE {new Date().getFullYear()}. ALL PROTOCOLS RESERVED.
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem" }}>
+            © {new Date().getFullYear()} Payside Inc. All rights reserved.
           </p>
-          <div style={{ display: "flex", gap: 32 }}>
-            {["SYSTEM TERMS", "PRIVACY DATA", "ENCRYPTION POLICY"].map((t) => (
-              <a
-                key={t}
-                href="#"
-                style={{ color: "inherit", textDecoration: "none" }}
+
+          <div style={{ display: "flex", gap: 24 }}>
+            {SOCIAL.map(({ Icon, href }, idx) => (
+              <motion.a
+                key={idx}
+                href={href}
+                whileHover={{ y: -3, color: "#FF3658" }}
+                style={{
+                  color: "rgba(255,255,255,0.5)",
+                  transition: "color 0.2s",
+                }}
               >
-                {t}
-              </a>
+                <Icon size={20} />
+              </motion.a>
             ))}
           </div>
         </div>
@@ -284,8 +237,24 @@ export default function Footer() {
 
       <style>{`
         @media (max-width: 900px) {
-          footer .container > div:first-child { grid-template-columns: 1fr !important; }
-          footer .container > div:nth-child(2) { grid-template-columns: 1fr !important; }
+          .footer-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 40px !important;
+          }
+          .footer-grid > div:first-child {
+            grid-column: 1 / -1;
+            margin-bottom: 20px;
+          }
+          .footer-bottom {
+            flex-direction: column;
+            gap: 24px;
+            text-align: center;
+          }
+        }
+        @media (max-width: 600px) {
+          .footer-grid {
+            grid-template-columns: 1fr !important;
+          }
         }
       `}</style>
     </footer>

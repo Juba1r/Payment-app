@@ -162,7 +162,7 @@ export default function Navbar() {
                     letterSpacing: "0.05em",
                   }}
                 >
-                  ZAIKA
+                  PAYSIDE
                 </span>
                 <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                   <div

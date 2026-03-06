@@ -15,20 +15,20 @@ const barlow = Barlow_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: "Zaika — Business Payment Solutions",
+  title: "Payside — Business Payment Solutions",
   description:
-    "Increase revenue with Zaika's retail payment solutions. Split payments, BNPL, and performance marketing for businesses.",
+    "Increase revenue with Payside's retail payment solutions. Split payments, BNPL, and performance marketing for businesses.",
   keywords: [
     "fintech",
     "payments",
     "BNPL",
-    "zaika",
+    "payside",
     "business",
     "split payments",
   ],
-  authors: [{ name: "Zaika Inc." }],
+  authors: [{ name: "Payside Inc." }],
   openGraph: {
-    title: "Zaika — Business Payment Solutions",
+    title: "Payside — Business Payment Solutions",
     description:
       "Increase revenue with split payment options and performance marketing.",
     type: "website",
@@ -41,7 +41,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${inter.variable} ${barlow.variable}`}>
-      <body style={{ background: "#080808" }}>{children}</body>
+      <body style={{ background: "#080808", position: "relative" }}>
+        {children}
+      </body>
     </html>
   );
 }

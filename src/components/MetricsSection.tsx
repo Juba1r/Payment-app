@@ -14,7 +14,7 @@ const RESOURCES = [
     color: "var(--lime)",
   },
   {
-    tag: "ZAIKA PAY APP",
+    tag: "PAYSIDE PAY APP",
     title: "Mobile Terminal",
     desc: "Complete offline payments from anywhere. Full offline synchronisation ensures you never miss a sale — even without connectivity.",
     cta: "GET THE APP",
@@ -24,7 +24,7 @@ const RESOURCES = [
   {
     tag: "INTEGRATIONS",
     title: "Developer API",
-    desc: "Add Zaika as a payment method with our pre-built plugins or use our flexible REST API to build a fully custom integration.",
+    desc: "Add Payside as a payment method with our pre-built plugins or use our flexible REST API to build a fully custom integration.",
     cta: "VIEW DOCS",
     Icon: Globe,
     color: "#a78bfa",

@@ -26,7 +26,7 @@ const SHOWCASE_ITEMS = [
     tag: "Core Engine",
     description:
       "Our proprietary high-frequency payment engine processes millions of requests with sub-millisecond latency across every channel.",
-    color: "var(--lime)",
+    color: "#FF3658",
   },
   {
     title: "Neural",
@@ -40,7 +40,7 @@ const SHOWCASE_ITEMS = [
     tag: "Security Layer",
     description:
       "Post-quantum encryption shielding every transaction with military-grade digital signature verification end-to-end.",
-    color: "var(--lime)",
+    color: "#FF3658",
   },
 ];
 
@@ -137,7 +137,8 @@ export const ShowcaseSection: React.FC = () => {
           className="perspective-world"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
             gap: 32,
           }}
         >

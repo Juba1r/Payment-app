@@ -13,12 +13,12 @@ import {
 } from "lucide-react";
 
 const PARTNERS = [
-  { text: "Shopify", icon: ShoppingCart, color: "#FF4B4B" },
+  { text: "Shopify", icon: ShoppingCart, color: "#FF3658" },
   { text: "WooCommerce", icon: Globe, color: "var(--lime)" },
   { text: "Magento", icon: BrainCircuit, color: "#60a5fa" },
   { text: "Salesforce", icon: BarChart2, color: "var(--lime)" },
   { text: "PrestaShop", icon: Zap, color: "#a78bfa" },
-  { text: "Shopstar", icon: TrendingUp, color: "#FF4B4B" },
+  { text: "Shopstar", icon: TrendingUp, color: "#FF3658" },
   { text: "iOS SDK", icon: Rocket, color: "#60a5fa" },
   { text: "Android SDK", icon: ShieldCheck, color: "var(--lime)" },
 ];
@@ -27,7 +27,10 @@ const ITEMS_TRIPLE = [...PARTNERS, ...PARTNERS, ...PARTNERS];
 
 export default function LogoMarquee() {
   return (
-    <section
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
       style={{
         background: "var(--black)",
         padding: "80px 0",
@@ -123,6 +126,6 @@ export default function LogoMarquee() {
           ))}
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

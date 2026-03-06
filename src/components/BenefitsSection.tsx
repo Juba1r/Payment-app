@@ -7,7 +7,7 @@ import { Star, Quote, ArrowRight } from "lucide-react";
 const TESTIMONIALS = [
   {
     quote:
-      "Since onboarding Zaika, our average order value expanded by 34%. The split-payment option removed the biggest barrier at checkout.",
+      "Since onboarding Payside, our average order value expanded by 34%. The split-payment option removed the biggest barrier at checkout.",
     author: "Sarah M.",
     role: "Head of eCommerce, FashionHub",
     color: "var(--lime)",
@@ -21,7 +21,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "28% reduction in cart abandonment since launch. Zaika is now a core pillar of our growth strategy going forward.",
+      "28% reduction in cart abandonment since launch. Payside is now a core pillar of our growth strategy going forward.",
     author: "Nomsa K.",
     role: "Ops Director, Homestyle",
     color: "#FF4B4B",
@@ -78,7 +78,7 @@ export default function BenefitsSection() {
                   marginBottom: 20,
                 }}
               >
-                Why Businesses Love Zaika
+                Why Businesses Love Payside
               </span>
               <h2
                 className="display display-lg"
@@ -96,7 +96,7 @@ export default function BenefitsSection() {
               style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
             >
               Join thousands of businesses already experiencing higher
-              conversion rates and expanded customer reach with the Zaika
+              conversion rates and expanded customer reach with the Payside
               network.
             </p>
           </div>

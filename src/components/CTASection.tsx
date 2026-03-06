@@ -82,7 +82,7 @@ export default function CTASection() {
                 marginBottom: 24,
               }}
             >
-              Join the Zaika Network
+              Join the Payside Network
             </span>
             <h2
               className="display display-lg"

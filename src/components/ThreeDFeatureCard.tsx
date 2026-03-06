@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import * as THREE from "three";
 import { motion } from "framer-motion";
 import { InteractiveGlassCard } from "./InteractiveGlassCard";
 import { ThreeDSceneText } from "./ThreeDText";
@@ -20,6 +21,20 @@ export const ThreeDFeatureCard: React.FC<ThreeDFeatureCardProps> = ({
   color = "#FF4B4B",
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  // Suppress specific harmless Three.js library deprecations for cleaner logs
+  React.useEffect(() => {
+    const originalWarn = console.warn;
+    console.warn = (...args) => {
+      const msg = typeof args[0] === "string" ? args[0] : "";
+      if (msg.includes("THREE.Clock") || msg.includes("PCFSoftShadowMap"))
+        return;
+      originalWarn(...args);
+    };
+    return () => {
+      console.warn = originalWarn;
+    };
+  }, []);
 
   return (
     <motion.div
@@ -47,7 +62,7 @@ export const ThreeDFeatureCard: React.FC<ThreeDFeatureCardProps> = ({
           {/* Top Area: 3D Text Title */}
           <div style={{ height: "160px", width: "100%", position: "relative" }}>
             <Canvas
-              shadows
+              shadows={{ type: THREE.PCFShadowMap }}
               camera={{ position: [0, 0, 4], fov: 35 }}
               dpr={[1, 1.5]}
               gl={{ powerPreference: "high-performance", antialias: false }}

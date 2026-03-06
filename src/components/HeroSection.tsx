@@ -1,7 +1,104 @@
 "use client";
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, animate } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+
+const TypewriterText = ({ text, delay }: { text: string; delay: number }) => {
+  const [typedText, setTypedText] = useState("");
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    let typeInterval: ReturnType<typeof setInterval>;
+
+    timeout = setTimeout(() => {
+      let i = 0;
+      typeInterval = setInterval(() => {
+        setTypedText(text.slice(0, i));
+        i++;
+        if (i > text.length) clearInterval(typeInterval);
+      }, 15);
+    }, delay * 1000);
+
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(typeInterval);
+    };
+  }, [text, delay]);
+
+  return (
+    <div
+      style={{
+        fontSize: "1.1rem",
+        lineHeight: 1.7,
+        color: "rgba(255,255,255,0.55)",
+        maxWidth: 400,
+        minHeight: 85,
+      }}
+    >
+      {typedText}
+      <motion.span
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ repeat: Infinity, duration: 0.8 }}
+        style={{
+          display: typedText.length === text.length ? "none" : "inline-block",
+          width: 8,
+          height: 16,
+          background: "var(--lime)",
+          verticalAlign: "middle",
+          marginLeft: 4,
+        }}
+      />
+    </div>
+  );
+};
+
+const AnimatedCounter = ({
+  from = 0,
+  to,
+  duration = 2,
+  delay = 0,
+  suffix = "",
+  isFloat = false,
+}: {
+  from?: number;
+  to: number;
+  duration?: number;
+  delay?: number;
+  suffix?: string;
+  isFloat?: boolean;
+}) => {
+  const nodeRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const node = nodeRef.current;
+    if (node) {
+      let controls: any;
+      const timeoutId = setTimeout(() => {
+        controls = animate(from, to, {
+          duration,
+          ease: "easeOut",
+          onUpdate(value) {
+            node.textContent =
+              (isFloat ? value.toFixed(1) : Math.round(value).toString()) +
+              suffix;
+          },
+        });
+      }, delay * 1000);
+
+      return () => {
+        clearTimeout(timeoutId);
+        if (controls) controls.stop();
+      };
+    }
+  }, [from, to, duration, delay, suffix, isFloat]);
+
+  return (
+    <span ref={nodeRef}>
+      {from}
+      {suffix}
+    </span>
+  );
+};
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,7 +133,7 @@ export default function HeroSection() {
           position: "absolute",
           inset: 0,
           backgroundImage:
-            "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,75,75,0.07) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,54,88,0.07) 0%, transparent 70%)",
           pointerEvents: "none",
           zIndex: 0,
         }}
@@ -101,18 +198,15 @@ export default function HeroSection() {
               color: "var(--lime)",
             }}
           >
-            Zaika Business Platform
+            Payside Business Platform
           </span>
         </motion.div>
 
         {/* Main headline — editorial, large, split line */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.19, 1, 0.22, 1] }}
+        <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(3.8rem, 10vw, 9rem)",
+            fontSize: "clamp(3rem, 10vw, 9rem)",
             fontWeight: 900,
             textTransform: "uppercase",
             lineHeight: 0.88,
@@ -120,14 +214,45 @@ export default function HeroSection() {
             color: "#fff",
             marginBottom: 40,
             maxWidth: 1000,
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          Increase
-          <br />
-          <span style={{ color: "var(--lime)" }}>Revenue</span>
-          <br />
-          With Us.
-        </motion.h1>
+          <motion.span
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.9,
+              delay: 0.1,
+              ease: [0.19, 1, 0.22, 1],
+            }}
+          >
+            Increase
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.9,
+              delay: 0.35,
+              ease: [0.19, 1, 0.22, 1],
+            }}
+            style={{ color: "var(--lime)" }}
+          >
+            Revenue
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.9,
+              delay: 0.6,
+              ease: [0.19, 1, 0.22, 1],
+            }}
+          >
+            With Us.
+          </motion.span>
+        </h1>
 
         {/* Sub copy + CTA row */}
         <div
@@ -139,20 +264,20 @@ export default function HeroSection() {
             flexWrap: "wrap",
           }}
         >
-          <p
-            style={{
-              fontSize: "1.1rem",
-              lineHeight: 1.7,
-              color: "rgba(255,255,255,0.55)",
-              maxWidth: 400,
-            }}
-          >
-            Boost your sales with interest-free split payment options and
-            performance marketing. Get paid upfront while your customers pay in
-            flexible instalments.
-          </p>
+          <TypewriterText
+            text="Boost your sales with interest-free split payment options and performance marketing. Get paid upfront while your customers pay in flexible instalments."
+            delay={0.8}
+          />
 
-          <div
+          <motion.div
+            initial={{ opacity: 0, scale: 0, transformOrigin: "center" }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 220,
+              damping: 15,
+              delay: 1.4,
+            }}
             style={{
               display: "flex",
               gap: 16,
@@ -181,35 +306,52 @@ export default function HeroSection() {
                 See How It Works <ArrowRight size={14} />
               </span>
             </button>
-          </div>
+          </motion.div>
         </div>
 
         {/* Quick stat bar */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.25, ease: "easeOut" }}
+          className="stat-grid"
           style={{
             marginTop: 80,
-            display: "flex",
-            gap: 0,
+            display: "grid",
+            gap: 24,
             borderTop: "1px solid rgba(255,255,255,0.07)",
             paddingTop: 40,
-            flexWrap: "wrap",
           }}
         >
           {[
-            { num: "4.7★", label: "Google Rating" },
-            { num: "9s", label: "Transaction Frequency" },
-            { num: "11K+", label: "Daily Transactions" },
-            { num: "10K+", label: "Points of Presence" },
+            {
+              numRender: (
+                <AnimatedCounter to={4.7} isFloat suffix="★" delay={0.6} />
+              ),
+              label: "Google Rating",
+            },
+            {
+              numRender: <AnimatedCounter to={9} suffix="s" delay={0.6} />,
+              label: "Transaction Frequency",
+            },
+            {
+              numRender: <AnimatedCounter to={11} suffix="K+" delay={0.6} />,
+              label: "Daily Transactions",
+            },
+            {
+              numRender: <AnimatedCounter to={10} suffix="K+" delay={0.6} />,
+              label: "Points of Presence",
+            },
           ].map((s, i) => (
             <div
               key={i}
+              className="stat-item"
               style={{
-                flex: "1 1 160px",
-                paddingRight: 32,
-                paddingBottom: 16,
+                display: "flex",
+                flexDirection: "column",
                 borderRight:
                   i < 3 ? "1px solid rgba(255,255,255,0.07)" : "none",
-                paddingLeft: i > 0 ? 32 : 0,
+                paddingRight: 24,
               }}
             >
               <div
@@ -222,7 +364,7 @@ export default function HeroSection() {
                   marginBottom: 6,
                 }}
               >
-                {s.num}
+                {s.numRender}
               </div>
               <div
                 style={{
@@ -237,12 +379,28 @@ export default function HeroSection() {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </motion.div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #home .stat-row { flex-direction: column; }
+        #home .stat-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        @media (max-width: 900px) {
+          #home .stat-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px 24px !important;
+          }
+          #home .stat-grid > div {
+            border-right: none !important;
+            padding-right: 0 !important;
+            padding-left: 0 !important;
+          }
+        }
+        @media (max-width: 600px) {
+          #home .stat-grid {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
     </section>
