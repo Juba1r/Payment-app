@@ -1,47 +1,32 @@
 "use client";
 import React, { useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import * as THREE from "three";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { InteractiveGlassCard } from "./InteractiveGlassCard";
-import { ThreeDSceneText } from "./ThreeDText";
-import { Environment, ContactShadows } from "@react-three/drei";
 
-interface ThreeDFeatureCardProps {
+interface FeatureCardProps {
   title: string;
   description: string;
   tag: string;
   color?: string;
+  imageSrc: string;
 }
 
-export const ThreeDFeatureCard: React.FC<ThreeDFeatureCardProps> = ({
+export const ThreeDFeatureCard: React.FC<FeatureCardProps> = ({
   title,
   description,
   tag,
-  color = "#FF4B4B",
+  color = "#bfff00",
+  imageSrc,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-
-  // Suppress specific harmless Three.js library deprecations for cleaner logs
-  React.useEffect(() => {
-    const originalWarn = console.warn;
-    console.warn = (...args) => {
-      const msg = typeof args[0] === "string" ? args[0] : "";
-      if (msg.includes("THREE.Clock") || msg.includes("PCFSoftShadowMap"))
-        return;
-      originalWarn(...args);
-    };
-    return () => {
-      console.warn = originalWarn;
-    };
-  }, []);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.45 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -59,39 +44,35 @@ export const ThreeDFeatureCard: React.FC<ThreeDFeatureCardProps> = ({
             gap: 16,
           }}
         >
-          {/* Top Area: 3D Text Title */}
-          <div style={{ height: "160px", width: "100%", position: "relative" }}>
-            <Canvas
-              shadows={{ type: THREE.PCFShadowMap }}
-              camera={{ position: [0, 0, 4], fov: 35 }}
-              dpr={[1, 1.5]}
-              gl={{ powerPreference: "high-performance", antialias: false }}
-            >
-              <ambientLight intensity={0.5} />
-              <pointLight position={[10, 10, 10]} intensity={1} color={color} />
-              <spotLight
-                position={[-10, 10, 10]}
-                angle={0.15}
-                penumbra={1}
-                intensity={1}
-                castShadow
-              />
-
-              <ThreeDSceneText
-                text={title}
-                color={color}
-                isHovered={isHovered}
-              />
-
-              <Environment preset="city" />
-              <ContactShadows
-                position={[0, -1, 0]}
-                opacity={0.4}
-                scale={10}
-                blur={2.5}
-                far={4}
-              />
-            </Canvas>
+          {/* Top Area: Image Thumbnail */}
+          <div
+            style={{
+              height: "160px",
+              width: "100%",
+              position: "relative",
+              borderRadius: "16px",
+              overflow: "hidden",
+            }}
+          >
+            <Image
+              src={imageSrc}
+              alt={title}
+              fill
+              style={{
+                objectFit: "cover",
+                transform: isHovered ? "scale(1.05)" : "scale(1)",
+                transition: "transform 0.6s cubic-bezier(0.19, 1, 0.22, 1)",
+              }}
+            />
+            {/* Dark gradient overlay to blend into the card naturally */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(to top, rgba(20,20,25,0.8) 0%, transparent 60%)",
+              }}
+            />
           </div>
 
           {/* Middle Area: Info */}
@@ -102,6 +83,7 @@ export const ThreeDFeatureCard: React.FC<ThreeDFeatureCardProps> = ({
               flexDirection: "column",
               gap: 12,
               transform: "translateZ(30px)",
+              marginTop: 10,
             }}
           >
             <div
@@ -113,6 +95,7 @@ export const ThreeDFeatureCard: React.FC<ThreeDFeatureCardProps> = ({
                   height: 8,
                   borderRadius: "50%",
                   background: color,
+                  boxShadow: `0 0 10px ${color}`,
                 }}
               />
               <span

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { InteractiveGlassCard } from "./InteractiveGlassCard";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const CHECKLIST = [
   "Get paid upfront, instantly",
@@ -31,7 +32,7 @@ export default function CTASection() {
     <section
       id="cta"
       style={{
-        background: "var(--black)",
+        background: "transparent",
         padding: "120px 0",
         position: "relative",
         overflow: "hidden",
@@ -49,7 +50,7 @@ export default function CTASection() {
           height: 600,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(255,75,75,0.06) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(191, 255, 0,0.06) 0%, transparent 70%)",
           filter: "blur(80px)",
           pointerEvents: "none",
         }}
@@ -69,7 +70,7 @@ export default function CTASection() {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.45 }}
           >
             <span
               style={{
@@ -111,7 +112,7 @@ export default function CTASection() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.1 + i * 0.07 }}
+                  transition={{ delay: 0.05 + i * 0.04 }}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -126,7 +127,7 @@ export default function CTASection() {
                   <span
                     style={{
                       fontSize: "1rem",
-                      color: "rgba(255,255,255,0.65)",
+                      color: "rgba(255,255,255,0.75)",
                       fontWeight: 500,
                     }}
                   >
@@ -142,10 +143,10 @@ export default function CTASection() {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.45, delay: 0.1 }}
           >
             <InteractiveGlassCard
-              glowColor="rgba(255, 75, 75, 0.15)"
+              glowColor="rgba(191, 255, 0, 0.15)"
               className="glass-panel"
               style={{
                 padding: "48px 40px",
@@ -166,18 +167,16 @@ export default function CTASection() {
               >
                 Apply Now
               </h3>
-              <p
+              <ScrollTypewriter
+                text="Submit your details and our team will get in touch within 1 business day."
                 style={{
                   fontSize: "0.9rem",
-                  color: "rgba(255,255,255,0.4)",
+                  color: "#fff",
                   marginBottom: 32,
                   lineHeight: 1.6,
                   transform: "translateZ(20px)",
                 }}
-              >
-                Submit your details and our team will get in touch within 1
-                business day.
-              </p>
+              />
 
               <div
                 style={{
@@ -229,7 +228,7 @@ export default function CTASection() {
                   onClick={handleSend}
                   whileHover={{
                     scale: 1.02,
-                    boxShadow: "0 0 30px rgba(255,75,75,0.3)",
+                    boxShadow: "0 0 30px rgba(191, 255, 0,0.3)",
                   }}
                   whileTap={{ scale: 0.98 }}
                   style={{
@@ -266,7 +265,7 @@ export default function CTASection() {
                 <p
                   style={{
                     fontSize: 11,
-                    color: "rgba(255,255,255,0.25)",
+                    color: "rgba(255,255,255,0.35)",
                     textAlign: "center",
                     lineHeight: 1.5,
                   }}
@@ -284,7 +283,7 @@ export default function CTASection() {
           #cta .container > div { grid-template-columns: 1fr !important; gap: 48px !important; }
         }
         input:focus {
-          border-color: rgba(255,75,75,0.4) !important;
+          border-color: rgba(191, 255, 0,0.4) !important;
         }
       `}</style>
     </section>

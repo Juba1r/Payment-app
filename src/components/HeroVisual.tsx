@@ -33,7 +33,7 @@ export const FuturisticOrb = ({ isHovered = false }) => {
           distortionScale={0.5}
           temporalDistortion={0.1}
           iridescence={1}
-          color="#FF4B4B"
+          color="#bfff00"
           metalness={0.8}
           roughness={0.1}
         />
@@ -43,8 +43,8 @@ export const FuturisticOrb = ({ isHovered = false }) => {
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[1.5, 0.02, 16, 100]} />
         <meshStandardMaterial
-          color="#FF4B4B"
-          emissive="#FF4B4B"
+          color="#bfff00"
+          emissive="#bfff00"
           emissiveIntensity={5}
         />
       </mesh>

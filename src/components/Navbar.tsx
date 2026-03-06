@@ -114,10 +114,10 @@ export default function Navbar() {
               : "rgba(255, 255, 255, 0.03)",
             backdropFilter: "blur(24px) saturate(150%)",
             border: scrolled
-              ? "1px solid rgba(255, 75, 75, 0.2)"
+              ? "1px solid rgba(191, 255, 0, 0.2)"
               : "1px solid rgba(255, 255, 255, 0.08)",
             boxShadow: scrolled
-              ? "0 25px 60px -15px rgba(0,0,0,0.8), 0 0 20px rgba(255,75,75,0.15)"
+              ? "0 25px 60px -15px rgba(0,0,0,0.8), 0 0 20px rgba(191, 255, 0,0.15)"
               : "0 15px 40px -10px rgba(0,0,0,0.4)",
             transition: "all 0.5s cubic-bezier(0.19, 1, 0.22, 1)",
             transform: scrolled ? "scale(0.96)" : "scale(1)",
@@ -126,6 +126,12 @@ export default function Navbar() {
           {/* Logo Section */}
           <Link
             href="/"
+            onClick={(e) => {
+              if (window.location.pathname === "/") {
+                e.preventDefault();
+                scrollTo("#home", "Home");
+              }
+            }}
             style={{
               marginRight: 12,
               display: "flex",
@@ -144,7 +150,7 @@ export default function Navbar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: "0 0 25px rgba(255,75,75,0.4)",
+                boxShadow: "0 0 25px rgba(191, 255, 0,0.4)",
               }}
             >
               <span style={{ color: "black", fontWeight: 900, fontSize: 20 }}>
@@ -237,7 +243,7 @@ export default function Navbar() {
                 padding: "10px 24px",
                 fontSize: 12,
                 borderRadius: 9999,
-                boxShadow: "0 10px 25px rgba(255,75,75,0.25)",
+                boxShadow: "0 10px 25px rgba(191, 255, 0,0.25)",
               }}
               data-text="INITIATE SYNC"
             >
@@ -285,7 +291,7 @@ export default function Navbar() {
               zIndex: 1999,
               pointerEvents: "auto",
               boxShadow: "0 40px 100px rgba(0,0,0,0.8)",
-              border: "1px solid rgba(255,75,75,0.2)",
+              border: "1px solid rgba(191, 255, 0,0.2)",
             }}
           >
             {NAV_LINKS.map((link) => (
@@ -302,7 +308,7 @@ export default function Navbar() {
                   color: activeTab === link.label ? "var(--lime)" : "#fff",
                   background:
                     activeTab === link.label
-                      ? "rgba(255,75,75,0.05)"
+                      ? "rgba(191, 255, 0,0.05)"
                       : "transparent",
                   borderRadius: 12,
                   display: "flex",
@@ -394,9 +400,9 @@ function NavButton({
               position: "absolute",
               inset: 0,
               borderRadius: 9999,
-              background: "rgba(255, 75, 75, 0.1)",
-              border: "1px solid rgba(255, 75, 75, 0.2)",
-              boxShadow: "0 0 20px rgba(255, 75, 75, 0.15)",
+              background: "rgba(191, 255, 0, 0.1)",
+              border: "1px solid rgba(191, 255, 0, 0.2)",
+              boxShadow: "0 0 20px rgba(191, 255, 0, 0.15)",
               zIndex: 0,
             }}
           />

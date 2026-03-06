@@ -1,24 +1,8 @@
 "use client";
 import React from "react";
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-
-// Lazy-load the extremely heavy ThreeJs/WebGL context off the main thread
-const ThreeDFeatureCard = dynamic(
-  () => import("./ThreeDFeatureCard").then((mod) => mod.ThreeDFeatureCard),
-  {
-    ssr: false,
-    loading: () => (
-      <div
-        style={{
-          height: 420,
-          borderRadius: 24,
-          background: "rgba(255,255,255,0.02)",
-        }}
-      />
-    ),
-  },
-);
+import { ThreeDFeatureCard } from "./ThreeDFeatureCard";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const SHOWCASE_ITEMS = [
   {
@@ -26,7 +10,8 @@ const SHOWCASE_ITEMS = [
     tag: "Core Engine",
     description:
       "Our proprietary high-frequency payment engine processes millions of requests with sub-millisecond latency across every channel.",
-    color: "#FF3658",
+    color: "#bfff00",
+    imageSrc: "/images/core-engine.png",
   },
   {
     title: "Neural",
@@ -34,13 +19,15 @@ const SHOWCASE_ITEMS = [
     description:
       "Adaptive fraud detection powered by real-time neural networks. Every transaction is scored and verified before it lands.",
     color: "#fff",
+    imageSrc: "/images/ai-risk.png",
   },
   {
     title: "Aura",
     tag: "Security Layer",
     description:
       "Post-quantum encryption shielding every transaction with military-grade digital signature verification end-to-end.",
-    color: "#FF3658",
+    color: "#bfff00",
+    imageSrc: "/images/security-layer.png",
   },
 ];
 
@@ -50,7 +37,7 @@ export const ShowcaseSection: React.FC = () => {
       id="stack"
       style={{
         padding: "120px 0",
-        background: "var(--black)",
+        background: "transparent",
         position: "relative",
         overflow: "hidden",
         borderTop: "1px solid rgba(255,255,255,0.06)",
@@ -71,7 +58,7 @@ export const ShowcaseSection: React.FC = () => {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.45 }}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -119,17 +106,11 @@ export const ShowcaseSection: React.FC = () => {
             </h2>
           </motion.div>
 
-          <motion.p
+          <ScrollTypewriter
             className="body-lg"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
-          >
-            Three layers of cutting-edge technology work together beneath every
-            transaction — so you can focus on growing your business.
-          </motion.p>
+            text="Three layers of cutting-edge technology work together beneath every transaction — so you can focus on growing your business."
+            style={{ color: "#fff", lineHeight: 1.8 }}
+          />
         </div>
 
         {/* Keep the existing 3D feature cards */}
@@ -149,6 +130,7 @@ export const ShowcaseSection: React.FC = () => {
               tag={item.tag}
               description={item.description}
               color={item.color}
+              imageSrc={item.imageSrc}
             />
           ))}
         </div>

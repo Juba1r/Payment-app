@@ -12,7 +12,7 @@ interface InteractiveGlassCardProps {
 export const InteractiveGlassCard: React.FC<InteractiveGlassCardProps> = ({
   children,
   className = "",
-  glowColor = "rgba(255, 75, 75, 0.4)",
+  glowColor = "rgba(191, 255, 0, 0.4)",
   style = {},
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);

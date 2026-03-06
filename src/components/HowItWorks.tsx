@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Star, CreditCard, LayoutDashboard, MapPin } from "lucide-react";
 import { InteractiveGlassCard } from "./InteractiveGlassCard";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const STATS = [
   {
@@ -10,7 +11,7 @@ const STATS = [
     Icon: Star,
     bigNum: "4.7/5",
     body: "Industry-leading interest-free payment solutions trusted by thousands of shoppers. Backed by over 5,378 verified reviews.",
-    color: "#FF4B4B",
+    color: "#bfff00",
   },
   {
     label: "Transaction Every 9 Seconds",
@@ -42,7 +43,7 @@ export default function HowItWorks() {
     <section
       id="how-it-works"
       style={{
-        background: "var(--black)",
+        background: "transparent",
         padding: "120px 0",
         position: "relative",
         overflow: "hidden",
@@ -94,14 +95,11 @@ export default function HowItWorks() {
               Our Numbers <span style={{ color: "var(--lime)" }}>Speak</span>
             </h2>
           </div>
-          <p
+          <ScrollTypewriter
             className="body-lg"
-            style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
-          >
-            Payside connects your business to a growing community of shoppers
-            with spend-facility available. The broader our network, the bigger
-            the opportunity for you.
-          </p>
+            text="Payside connects your business to a growing community of shoppers with spend-facility available. The broader our network, the bigger the opportunity for you."
+            style={{ color: "#fff", lineHeight: 1.8 }}
+          />
         </motion.div>
 
         {/* Accordion stat cards */}
@@ -121,7 +119,7 @@ export default function HowItWorks() {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ margin: "-50px", once: false }}
-                transition={{ duration: 0.6, delay: i * 0.05 }}
+                transition={{ duration: 0.45, delay: i * 0.04 }}
                 style={{
                   position: "sticky",
                   top: `calc(15vh + ${i * 25}px)`,
@@ -246,17 +244,16 @@ export default function HowItWorks() {
                               alignItems: "flex-end",
                             }}
                           >
-                            <p
+                            <ScrollTypewriter
+                              text={s.body}
                               style={{
                                 fontSize: "1.05rem",
                                 lineHeight: 1.75,
-                                color: "rgba(255,255,255,0.55)",
+                                color: "#fff",
                                 maxWidth: 520,
                                 transform: "translateZ(20px)",
                               }}
-                            >
-                              {s.body}
-                            </p>
+                            />
                             <div
                               style={{
                                 fontFamily: "var(--font-display)",

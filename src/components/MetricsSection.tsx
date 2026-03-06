@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Cpu, Smartphone, Globe } from "lucide-react";
 import { InteractiveGlassCard } from "./InteractiveGlassCard";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const RESOURCES = [
   {
@@ -36,7 +37,7 @@ export default function MetricsSection() {
     <section
       id="resources"
       style={{
-        background: "var(--black)",
+        background: "transparent",
         padding: "120px 0",
         position: "relative",
         overflow: "hidden",
@@ -68,7 +69,7 @@ export default function MetricsSection() {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.45 }}
           >
             <span
               style={{
@@ -91,17 +92,11 @@ export default function MetricsSection() {
             </h2>
           </motion.div>
 
-          <motion.p
+          <ScrollTypewriter
             className="body-lg"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
-          >
-            A cohesive suite of tools designed to help you onboard fast, manage
-            payments effortlessly, and grow your business across every channel.
-          </motion.p>
+            text="A cohesive suite of tools designed to help you onboard fast, manage payments effortlessly, and grow your business across every channel."
+            style={{ color: "#fff", lineHeight: 1.8 }}
+          />
         </div>
 
         {/* Resource cards */}
@@ -119,7 +114,7 @@ export default function MetricsSection() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.12 }}
+              transition={{ duration: 0.45, delay: i * 0.08 }}
               style={{ height: "100%" }}
             >
               <InteractiveGlassCard
@@ -186,16 +181,15 @@ export default function MetricsSection() {
                   </div>
 
                   {/* Description */}
-                  <p
+                  <ScrollTypewriter
+                    text={r.desc}
                     style={{
                       fontSize: "0.95rem",
                       lineHeight: 1.75,
-                      color: "rgba(255,255,255,0.5)",
+                      color: "#fff",
                       flex: 1,
                     }}
-                  >
-                    {r.desc}
-                  </p>
+                  />
 
                   {/* CTA */}
                   <motion.button

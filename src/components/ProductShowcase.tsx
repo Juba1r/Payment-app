@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { Smartphone, LineChart, Globe } from "lucide-react";
 import { InteractiveGlassCard } from "./InteractiveGlassCard";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const CHANNELS = [
   {
@@ -35,7 +36,7 @@ export default function ProductShowcase() {
     <section
       id="channels"
       style={{
-        background: "var(--black)",
+        background: "transparent",
         padding: "120px 0",
         position: "relative",
         overflow: "hidden",
@@ -67,7 +68,7 @@ export default function ProductShowcase() {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.45 }}
           >
             <span
               style={{
@@ -90,18 +91,11 @@ export default function ProductShowcase() {
             </h2>
           </motion.div>
 
-          <motion.p
+          <ScrollTypewriter
             className="body-lg"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
-          >
-            Whether your customers shop online, in-store, or through their
-            phone, Payside integrates seamlessly into every channel with zero
-            disruption to your existing workflow.
-          </motion.p>
+            text="Whether your customers shop online, in-store, or through their phone, Payside integrates seamlessly into every channel with zero disruption to your existing workflow."
+            style={{ color: "#fff", lineHeight: 1.8 }}
+          />
         </div>
 
         {/* Cards */}
@@ -119,7 +113,7 @@ export default function ProductShowcase() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.12 }}
+              transition={{ duration: 0.45, delay: i * 0.08 }}
               style={{ height: "100%" }}
             >
               <InteractiveGlassCard
@@ -187,16 +181,15 @@ export default function ProductShowcase() {
                   </div>
 
                   {/* Body */}
-                  <p
+                  <ScrollTypewriter
+                    text={c.desc}
                     style={{
                       fontSize: "0.95rem",
                       lineHeight: 1.75,
-                      color: "rgba(255,255,255,0.5)",
+                      color: "#fff",
                       flex: 1,
                     }}
-                  >
-                    {c.desc}
-                  </p>
+                  />
 
                   {/* Badge */}
                   <div

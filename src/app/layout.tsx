@@ -36,12 +36,15 @@ export const metadata: Metadata = {
   },
 };
 
+import BackgroundVideo from "@/components/BackgroundVideo";
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${inter.variable} ${barlow.variable}`}>
-      <body style={{ background: "#080808", position: "relative" }}>
+      <body style={{ background: "transparent", position: "relative" }}>
+        <BackgroundVideo />
         {children}
       </body>
     </html>

@@ -14,7 +14,7 @@ export const GridFloor = () => {
 
   return (
     <group rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}>
-      <gridHelper args={[100, 50, "#FF4B4B", "#222"]} />
+      <gridHelper args={[100, 50, "#bfff00", "#222"]} />
       <mesh ref={meshRef}>
         <planeGeometry args={[100, 100]} />
         <meshStandardMaterial color="#000" transparent opacity={0.5} />

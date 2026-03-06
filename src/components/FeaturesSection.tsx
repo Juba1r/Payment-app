@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CreditCard, Layers } from "lucide-react";
 import { InteractiveGlassCard } from "./InteractiveGlassCard";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const PROTOCOLS = [
   {
@@ -19,7 +20,7 @@ const PROTOCOLS = [
     desc: "Execute high-velocity BNPL at checkout. Split purchases into 3 equal zero-interest payments, eliminating cart abandonment and maximising conversion at the checkout horizon.",
     badge: "Zero Interest",
     Icon: CreditCard,
-    color: "#FF4B4B",
+    color: "#bfff00",
   },
 ];
 
@@ -28,7 +29,7 @@ export default function FeaturesSection() {
     <section
       id="solutions"
       style={{
-        background: "var(--black)",
+        background: "transparent",
         padding: "120px 0",
         position: "relative",
         overflow: "hidden",
@@ -61,7 +62,7 @@ export default function FeaturesSection() {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.45 }}
           >
             <span
               style={{
@@ -86,18 +87,11 @@ export default function FeaturesSection() {
             </h2>
           </motion.div>
 
-          <motion.p
+          <ScrollTypewriter
             className="body-lg"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
-          >
-            Accelerate your transaction velocity. Our payment nodes allow for
-            instantaneous upfront settlements while providing flexible payment
-            options for your customers.
-          </motion.p>
+            text="Accelerate your transaction velocity. Our payment nodes allow for instantaneous upfront settlements while providing flexible payment options for your customers."
+            style={{ color: "#fff", lineHeight: 1.8 }}
+          />
         </div>
 
         {/* Cards grid */}
@@ -110,7 +104,7 @@ export default function FeaturesSection() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
+              transition={{ duration: 0.45, delay: i * 0.08 }}
             >
               <InteractiveGlassCard
                 className="glass-panel"
@@ -178,17 +172,16 @@ export default function FeaturesSection() {
                   </div>
 
                   {/* Body */}
-                  <p
+                  <ScrollTypewriter
+                    text={p.desc}
                     style={{
                       fontSize: "1rem",
                       lineHeight: 1.75,
-                      color: "rgba(255,255,255,0.5)",
+                      color: "#fff",
                       flex: 1,
                       transform: "translateZ(20px)",
                     }}
-                  >
-                    {p.desc}
-                  </p>
+                  />
 
                   {/* Badge + CTA */}
                   <div

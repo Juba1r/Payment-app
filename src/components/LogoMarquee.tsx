@@ -11,14 +11,15 @@ import {
   Zap,
   BarChart2,
 } from "lucide-react";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const PARTNERS = [
-  { text: "Shopify", icon: ShoppingCart, color: "#FF3658" },
+  { text: "Shopify", icon: ShoppingCart, color: "#bfff00" },
   { text: "WooCommerce", icon: Globe, color: "var(--lime)" },
   { text: "Magento", icon: BrainCircuit, color: "#60a5fa" },
   { text: "Salesforce", icon: BarChart2, color: "var(--lime)" },
   { text: "PrestaShop", icon: Zap, color: "#a78bfa" },
-  { text: "Shopstar", icon: TrendingUp, color: "#FF3658" },
+  { text: "Shopstar", icon: TrendingUp, color: "#bfff00" },
   { text: "iOS SDK", icon: Rocket, color: "#60a5fa" },
   { text: "Android SDK", icon: ShieldCheck, color: "var(--lime)" },
 ];
@@ -32,7 +33,7 @@ export default function LogoMarquee() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
       style={{
-        background: "var(--black)",
+        background: "transparent",
         padding: "80px 0",
         overflow: "hidden",
         position: "relative",
@@ -41,17 +42,16 @@ export default function LogoMarquee() {
       }}
     >
       <div className="container" style={{ marginBottom: 40 }}>
-        <p
+        <ScrollTypewriter
+          text="Compatible with leading platforms & frameworks"
           style={{
             fontSize: 11,
             fontWeight: 800,
             letterSpacing: "0.22em",
             textTransform: "uppercase",
-            color: "rgba(255,255,255,0.3)",
+            color: "#fff",
           }}
-        >
-          Compatible with leading platforms &amp; frameworks
-        </p>
+        />
       </div>
 
       <div
@@ -116,7 +116,7 @@ export default function LogoMarquee() {
                 style={{
                   fontSize: "0.9rem",
                   fontWeight: 700,
-                  color: "rgba(255,255,255,0.55)",
+                  color: "rgba(255,255,255,0.7)",
                   letterSpacing: "0.04em",
                 }}
               >

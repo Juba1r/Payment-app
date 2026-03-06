@@ -8,6 +8,7 @@ import {
   Twitter,
   ArrowRight,
 } from "lucide-react";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const FOOTER_LINKS = [
   {
@@ -35,10 +36,10 @@ export default function Footer() {
   return (
     <footer
       style={{
-        background: "#080808",
+        background: "transparent",
         paddingTop: 120,
         position: "relative",
-        borderTop: "1px solid rgba(255,54,88,0.1)",
+        borderTop: "1px solid rgba(191, 255, 0,0.1)",
         overflow: "hidden",
       }}
     >
@@ -52,7 +53,7 @@ export default function Footer() {
           width: "80%",
           height: "300px",
           background:
-            "radial-gradient(ellipse at top, rgba(255,54,88,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse at top, rgba(191, 255, 0,0.08) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -83,24 +84,18 @@ export default function Footer() {
               fontWeight: 900,
             }}
           >
-            Ready to <span style={{ color: "#FF3658" }}>boost</span> your sales?
+            Ready to <span style={{ color: "#bfff00" }}>boost</span> your sales?
           </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+          <ScrollTypewriter
+            text="Join thousands of merchants using Payside to offer flexible payment options and exponentially grow their business."
             style={{
-              color: "rgba(255,255,255,0.6)",
+              color: "#fff",
               fontSize: "1.1rem",
               marginBottom: 40,
               maxWidth: 600,
               lineHeight: 1.6,
             }}
-          >
-            Join thousands of merchants using Payside to offer flexible payment
-            options and exponentially grow their business.
-          </motion.p>
+          />
           <motion.button
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -115,6 +110,11 @@ export default function Footer() {
               alignItems: "center",
               gap: 12,
             }}
+            onClick={() =>
+              document
+                .querySelector("#cta")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
           >
             <span>Get Started Now</span>
             <ArrowRight size={18} />
@@ -128,6 +128,7 @@ export default function Footer() {
             display: "grid",
             gridTemplateColumns: "2fr 1fr 1fr 1fr",
             gap: 64,
+            alignItems: "flex-start",
             marginBottom: 80,
           }}
         >
@@ -144,19 +145,18 @@ export default function Footer() {
                 marginBottom: 24,
               }}
             >
-              PAYSIDE<span style={{ color: "#FF3658" }}>.</span>
+              PAYSIDE<span style={{ color: "#bfff00" }}>.</span>
             </span>
-            <p
+            <ScrollTypewriter
+              text="Empowering businesses with intelligent payment solutions, performance marketing, and seamless integrations."
+              speed={40}
               style={{
-                color: "rgba(255,255,255,0.5)",
+                color: "rgba(255,255,255,0.75)",
                 lineHeight: 1.6,
                 fontSize: "0.95rem",
                 maxWidth: 300,
               }}
-            >
-              Empowering businesses with intelligent payment solutions,
-              performance marketing, and seamless integrations.
-            </p>
+            />
           </div>
 
           {FOOTER_LINKS.map((col) => (
@@ -181,17 +181,26 @@ export default function Footer() {
                   gap: 16,
                 }}
               >
-                {col.links.map((link) => (
+                {col.links.map((link, linkIdx) => (
                   <li key={link}>
                     <motion.a
                       href="#"
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.4,
+                        delay: linkIdx * 0.05,
+                        ease: "easeOut",
+                      }}
                       style={{
-                        color: "rgba(255,255,255,0.6)",
+                        color: "var(--lime)",
                         textDecoration: "none",
                         fontSize: "0.95rem",
                         display: "inline-block",
+                        transition: "color 0.2s ease, transform 0.2s ease",
                       }}
-                      whileHover={{ color: "#FF3658", x: 4 }}
+                      whileHover={{ color: "#fff", x: 6 }}
                     >
                       {link}
                     </motion.a>
@@ -213,16 +222,22 @@ export default function Footer() {
             alignItems: "center",
           }}
         >
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem" }}>
-            © {new Date().getFullYear()} Payside Inc. All rights reserved.
-          </p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.5 }}
+            style={{ color: "var(--lime)", fontSize: "0.9rem" }}
+          >
+            © {new Date().getFullYear()} Jubair Ibn Khaled. All rights reserved.
+          </motion.p>
 
           <div style={{ display: "flex", gap: 24 }}>
             {SOCIAL.map(({ Icon, href }, idx) => (
               <motion.a
                 key={idx}
                 href={href}
-                whileHover={{ y: -3, color: "#FF3658" }}
+                whileHover={{ y: -3, color: "#bfff00" }}
                 style={{
                   color: "rgba(255,255,255,0.5)",
                   transition: "color 0.2s",

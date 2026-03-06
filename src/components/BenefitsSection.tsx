@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { InteractiveGlassCard } from "./InteractiveGlassCard";
 import { Star, Quote, ArrowRight } from "lucide-react";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const TESTIMONIALS = [
   {
@@ -24,7 +25,7 @@ const TESTIMONIALS = [
       "28% reduction in cart abandonment since launch. Payside is now a core pillar of our growth strategy going forward.",
     author: "Nomsa K.",
     role: "Ops Director, Homestyle",
-    color: "#FF4B4B",
+    color: "#bfff00",
   },
 ];
 
@@ -33,7 +34,7 @@ export default function BenefitsSection() {
     <section
       id="benefits"
       style={{
-        background: "var(--black)",
+        background: "transparent",
         padding: "120px 0",
         position: "relative",
         overflow: "hidden",
@@ -55,7 +56,7 @@ export default function BenefitsSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.45 }}
           style={{ marginBottom: 80 }}
         >
           <div
@@ -91,14 +92,11 @@ export default function BenefitsSection() {
                 Proven <span style={{ color: "var(--lime)" }}>Growth.</span>
               </h2>
             </div>
-            <p
+            <ScrollTypewriter
               className="body-lg"
-              style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}
-            >
-              Join thousands of businesses already experiencing higher
-              conversion rates and expanded customer reach with the Payside
-              network.
-            </p>
+              text="Join thousands of businesses already experiencing higher conversion rates and expanded customer reach with the Payside network."
+              style={{ color: "#fff", lineHeight: 1.8 }}
+            />
           </div>
         </motion.div>
 
@@ -116,7 +114,7 @@ export default function BenefitsSection() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
               style={{ height: "100%" }}
             >
               <InteractiveGlassCard

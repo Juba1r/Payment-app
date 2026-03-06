@@ -2,21 +2,21 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, animate } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { ScrollTypewriter } from "./ScrollTypewriter";
 
 const TypewriterText = ({ text, delay }: { text: string; delay: number }) => {
   const [typedText, setTypedText] = useState("");
 
   useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
     let typeInterval: ReturnType<typeof setInterval>;
 
-    timeout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       let i = 0;
       typeInterval = setInterval(() => {
         setTypedText(text.slice(0, i));
         i++;
         if (i > text.length) clearInterval(typeInterval);
-      }, 15);
+      }, 10);
     }, delay * 1000);
 
     return () => {
@@ -28,10 +28,11 @@ const TypewriterText = ({ text, delay }: { text: string; delay: number }) => {
   return (
     <div
       style={{
-        fontSize: "1.1rem",
-        lineHeight: 1.7,
-        color: "rgba(255,255,255,0.55)",
-        maxWidth: 400,
+        fontSize: "1.25rem",
+        lineHeight: 1.6,
+        color: "#fff",
+        fontWeight: 500,
+        maxWidth: "min(500px, 90vw)",
         minHeight: 85,
       }}
     >
@@ -55,7 +56,7 @@ const TypewriterText = ({ text, delay }: { text: string; delay: number }) => {
 const AnimatedCounter = ({
   from = 0,
   to,
-  duration = 2,
+  duration = 1.2,
   delay = 0,
   suffix = "",
   isFloat = false,
@@ -72,7 +73,7 @@ const AnimatedCounter = ({
   useEffect(() => {
     const node = nodeRef.current;
     if (node) {
-      let controls: any;
+      let controls: ReturnType<typeof animate> | undefined;
       const timeoutId = setTimeout(() => {
         controls = animate(from, to, {
           duration,
@@ -116,7 +117,7 @@ export default function HeroSection() {
       ref={containerRef}
       style={{
         minHeight: "100vh",
-        background: "var(--black)",
+        background: "transparent",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -133,7 +134,7 @@ export default function HeroSection() {
           position: "absolute",
           inset: 0,
           backgroundImage:
-            "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,54,88,0.07) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(191, 255, 0,0.07) 0%, transparent 70%)",
           pointerEvents: "none",
           zIndex: 0,
         }}
@@ -222,8 +223,8 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.9,
-              delay: 0.1,
+              duration: 0.6,
+              delay: 0.05,
               ease: [0.19, 1, 0.22, 1],
             }}
           >
@@ -233,8 +234,8 @@ export default function HeroSection() {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{
-              duration: 0.9,
-              delay: 0.35,
+              duration: 0.6,
+              delay: 0.2,
               ease: [0.19, 1, 0.22, 1],
             }}
             style={{ color: "var(--lime)" }}
@@ -245,8 +246,8 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.9,
-              delay: 0.6,
+              duration: 0.6,
+              delay: 0.35,
               ease: [0.19, 1, 0.22, 1],
             }}
           >
@@ -276,7 +277,7 @@ export default function HeroSection() {
               type: "spring",
               stiffness: 220,
               damping: 15,
-              delay: 1.4,
+              delay: 0.8,
             }}
             style={{
               display: "flex",
@@ -366,17 +367,17 @@ export default function HeroSection() {
               >
                 {s.numRender}
               </div>
-              <div
+              <ScrollTypewriter
+                text={s.label}
+                speed={40}
                 style={{
                   fontSize: 12,
                   fontWeight: 700,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.4)",
+                  color: "#fff",
                 }}
-              >
-                {s.label}
-              </div>
+              />
             </div>
           ))}
         </motion.div>

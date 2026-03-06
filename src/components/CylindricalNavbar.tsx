@@ -167,7 +167,15 @@ export default function CylindricalNavbar() {
               gap: 12,
               cursor: "pointer",
             }}
-            onClick={() => router.push("/")}
+            onClick={() => {
+              if (window.location.pathname === "/") {
+                document
+                  .querySelector("#home")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              } else {
+                router.push("/");
+              }
+            }}
           >
             <div
               style={{
@@ -256,18 +264,18 @@ export default function CylindricalNavbar() {
                         borderRadius: 9999,
                         background:
                           isActive && isFlat
-                            ? "rgba(255, 75, 75, 0.1)"
+                            ? "rgba(191, 255, 0, 0.1)"
                             : !isFlat
                               ? "rgba(20, 20, 25, 0.85)"
                               : "transparent",
                         border: !isFlat
                           ? isActive
-                            ? "1px solid rgba(255, 75, 75, 0.4)"
+                            ? "1px solid rgba(191, 255, 0, 0.4)"
                             : "1px solid rgba(255, 255, 255, 0.1)"
                           : "1px solid transparent",
                         boxShadow:
                           !isFlat && isActive
-                            ? "0 0 20px rgba(255, 75, 75, 0.2)"
+                            ? "0 0 20px rgba(191, 255, 0, 0.2)"
                             : "none",
                         color: isActive ? "#fff" : "rgba(255,255,255,0.6)",
                         transition: "color 0.3s, background 0.3s, border 0.3s",
@@ -416,10 +424,10 @@ export default function CylindricalNavbar() {
                     padding: "16px 20px",
                     borderRadius: 16,
                     background: isActive
-                      ? "rgba(255, 75, 75, 0.1)"
+                      ? "rgba(191, 255, 0, 0.1)"
                       : "transparent",
                     border: isActive
-                      ? "1px solid rgba(255, 75, 75, 0.4)"
+                      ? "1px solid rgba(191, 255, 0, 0.4)"
                       : "1px solid transparent",
                     color: isActive ? "#fff" : "rgba(255,255,255,0.6)",
                     textAlign: "left",

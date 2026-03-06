@@ -21,7 +21,7 @@ interface ThreeDTextProps {
 
 export const ThreeDSceneText: React.FC<ThreeDTextProps> = ({
   text,
-  color = "#FF4B4B",
+  color = "#bfff00",
   isHovered = false,
   position = [0, 0, 0],
   scale = 1,
