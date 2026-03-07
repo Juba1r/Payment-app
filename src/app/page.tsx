@@ -66,10 +66,7 @@ function AnimatedSection({
 
 export default function Home() {
   return (
-    <main
-      className="relative"
-      style={{ position: "relative", overflowX: "hidden" }}
-    >
+    <main className="relative">
       <CylindricalNavbar />
       <HeroSection />
 

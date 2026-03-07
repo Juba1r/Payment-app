@@ -8,6 +8,7 @@ interface ScrollTypewriterProps {
   speed?: number;
   className?: string;
   style?: React.CSSProperties;
+  disabled?: boolean;
 }
 
 export const ScrollTypewriter = ({
@@ -16,13 +17,20 @@ export const ScrollTypewriter = ({
   speed = 8,
   className = "",
   style = {},
+  disabled = false,
 }: ScrollTypewriterProps) => {
-  const [typedText, setTypedText] = useState("");
-  const [hasStarted, setHasStarted] = useState(false);
+  const [typedText, setTypedText] = useState(disabled ? text : "");
+  const [hasStarted, setHasStarted] = useState(disabled);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   useEffect(() => {
+    if (disabled) {
+      setTypedText(text);
+      setHasStarted(true);
+      return;
+    }
+
     if (isInView && !hasStarted) {
       setHasStarted(true);
       const timeout = setTimeout(() => {
@@ -38,7 +46,7 @@ export const ScrollTypewriter = ({
 
       return () => clearTimeout(timeout);
     }
-  }, [isInView, hasStarted, text, delay, speed]);
+  }, [isInView, hasStarted, text, delay, speed, disabled]);
 
   return (
     <div ref={ref} className={className} style={{ ...style, color: "#fff" }}>
@@ -48,7 +56,7 @@ export const ScrollTypewriter = ({
         transition={{ repeat: Infinity, duration: 0.8 }}
         style={{
           display:
-            !hasStarted || typedText.length === text.length
+            disabled || !hasStarted || typedText.length === text.length
               ? "none"
               : "inline-block",
           width: 2,

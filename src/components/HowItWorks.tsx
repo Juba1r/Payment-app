@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Star, CreditCard, LayoutDashboard, MapPin } from "lucide-react";
 import { InteractiveGlassCard } from "./InteractiveGlassCard";
 import { ScrollTypewriter } from "./ScrollTypewriter";
@@ -38,6 +38,16 @@ const STATS = [
 
 export default function HowItWorks() {
   const [activeIdx, setActiveIdx] = useState<number | null>(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <section
@@ -99,6 +109,7 @@ export default function HowItWorks() {
             className="body-lg"
             text="Payside connects your business to a growing community of shoppers with spend-facility available. The broader our network, the bigger the opportunity for you."
             style={{ color: "#fff", lineHeight: 1.8 }}
+            disabled={isMobile}
           />
         </motion.div>
 
@@ -246,6 +257,7 @@ export default function HowItWorks() {
                           >
                             <ScrollTypewriter
                               text={s.body}
+                              disabled={isMobile}
                               style={{
                                 fontSize: "1.05rem",
                                 lineHeight: 1.75,

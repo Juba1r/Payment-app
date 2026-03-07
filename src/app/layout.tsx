@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
 };
 
-import BackgroundVideo from "@/components/BackgroundVideo";
+import ScrollFrameAnimation from "@/components/ScrollFrameAnimation";
 
 export default function RootLayout({
   children,
@@ -44,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${barlow.variable}`}>
       <body style={{ background: "transparent", position: "relative" }}>
-        <BackgroundVideo />
+        <ScrollFrameAnimation />
         {children}
       </body>
     </html>
